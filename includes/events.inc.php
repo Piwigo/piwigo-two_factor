@@ -111,6 +111,7 @@ function tf_loc_end_identification()
       'TF_STATUS_EXTERNAL_APP' => PwgTwoFactor::isEnabled($user['id'], 'external_app'),
       'TF_STATUS_EMAIL' => PwgTwoFactor::isEnabled($user['id'], 'email'),
       'F_ACTION' => 'identification.php?tf',
+      'TF_LOGOUT' => get_root_url().'?act=logout',
       'PWG_TOKEN' => get_pwg_token()
     ));
     $template->set_filenames( array('identification'=> TF_REALPATH . '/template/tf_identification.tpl') );

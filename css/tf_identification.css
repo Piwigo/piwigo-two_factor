@@ -102,6 +102,12 @@
   align-self: center;
 }
 
+.tf-logout {
+  display: flex;
+  justify-self: center;
+  margin-top: 20px !important;
+}
+
 .light .tf-contact-admin {
   color:#3C3C3C;
 }

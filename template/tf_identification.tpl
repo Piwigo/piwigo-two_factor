@@ -65,6 +65,7 @@ let str_handle_error = "{"An error has occured"|translate|escape:javascript}";
         </div>
         {/if}
       </div>
+      <a href="{$TF_LOGOUT}" class="btn btn-cancel tf-logout" id="tf_cancel_auth">{'Cancel'|translate}</a>
     </div>
 
     <form class="tf-totp-code-verify" id="tf_verify_code" method="post" action="{$F_ACTION}">
