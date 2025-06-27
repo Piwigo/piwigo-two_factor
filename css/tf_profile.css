@@ -50,7 +50,8 @@
 }
 
 #tf_send_email_code,
-#tf_send_totp_code {
+#tf_send_totp_code,
+#tf_deactivate {
   margin-top: 0 !important;
 }
 
@@ -161,6 +162,41 @@
   cursor: pointer;
 }
 
+.tf-bg-modal {
+  display: none;
+  position: fixed;
+  z-index: 100;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.7);
+}
+
+.tf-modal {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  border-radius: 10px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -48%);
+  text-align: left;
+  padding: 30px;
+  width: 400px;
+}
+
+.tf-modal-title {
+  font-size: 24px !important;
+}
+
+.tf-modal-save {
+  margin-top: 25px;
+  justify-content: space-between !important;
+  align-items: center;
+}
+
 .tf-red {
   font-size: 12px !important;
   color: #EB3223 !important;
@@ -176,8 +212,12 @@
   background-color: #FADDA2;
 }
 
-.light .tf-qr-code img{
+.light .tf-qr-code img {
   background-color: #3C3C3C;
+}
+
+.light .tf-modal {
+  background-color:#F0F0F0;
 }
 
 .dark .tf-recommanded {
@@ -198,10 +238,13 @@
     background-color: #FFA646 !important;
 }
 
-.dark .tf-qr-code img{
+.dark .tf-qr-code img {
   background-color: #fff;
 }
 
+.dark .tf-modal {
+  background-color:#303030;
+}
 
 .tf-switch {
   position: relative;

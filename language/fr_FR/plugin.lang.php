@@ -47,3 +47,7 @@ $lang['Error when sending email'] = 'Erreur lors de l\'envoi de l\'email';
 $lang['Unable to scan ? Get the <u>setup key</u>'] = 'Impossible de scanner ? Obtenir <u>la clé de configuration</u>';
 $lang['The email address is missing'] = 'L\'adresse email est manquante';
 $lang['If you are unable to connect, please contact the webmaster'] = 'Si vous ne parvenez pas à vous connecter, veuillez contacter le webmaster';
+$lang['Do you really want to disable two factor authentication by email?'] = 'Voulez-vous vraiment désactiver l\'authentification à deux facteurs par email ?';
+$lang['Do you really want to disable two factor authentication by application?'] = 'Voulez-vous vraiment désactiver l\'authentification à deux facteurs par application ?';
+$lang['Two-factor authentication by email has been successfully deactivated'] = 'L\'authentification à deux facteurs par email a été désactivée avec succès';
+$lang['Two-factor authentication by application has been successfully deactivated'] = 'L\'authentification à deux facteurs par application a été désactivée avec succès';

@@ -13,6 +13,10 @@ window.tf_twofactor = {
   str_send_again: "{"Send again."|translate|escape:javascript}",
   str_send_again_in: "{"Send it again in %s seconds."|translate|escape:javascript}",
   str_email_waint_until: "{"Please wait %s seconds before sending an email again."|translate|escape:javascript}",
+  str_deactivate_email: "{"Do you really want to disable two factor authentication by email?"|translate|escape:javascript}",
+  str_deactivate_external: "{"Do you really want to disable two factor authentication by application?"|translate|escape:javascript}",
+  str_deactivate_email_success: "{"Two-factor authentication by email has been successfully deactivated"|translate|escape:javascript}",
+  str_deactivate_external_success: "{"Two-factor authentication by application has been successfully deactivated'"|translate|escape:javascript}",
 
   enabled: {
     external_app: {$TF_STATUS_EXTERNAL_APP},
@@ -160,6 +164,17 @@ window.tf_twofactor = {
 
     <div id="tf_email_setting" class="tf-settings">
       <i class="icon-cog"></i>
+    </div>
+  </div>
+
+  <div class="tf-bg-modal">
+    <div class="tf-modal">
+      <p class="tf-modal-title" id="tf_modal_title">
+          {'Do you really want to disable two factor authentication by email?'|translate|escape:html}</p>
+      <div id="tf_save_modal" class="save tf-modal-save" data-modal="email">
+        <button class="btn btn-cancel" id="tf_deactivate_cancel">{'Cancel'|translate}</button>
+        <button class="btn btn-main" id="tf_deactivate">{'Yes'|translate}</button>
+      </div>
     </div>
   </div>
 

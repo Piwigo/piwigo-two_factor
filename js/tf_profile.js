@@ -18,6 +18,13 @@ $(function () {
     $('#tf_missing_mail').show();
   }
 
+  $('#tf_deactivate_cancel').on('click', function() {
+    const method = $(this).parent().data('modal');
+    const selector = method == 'email' ? '#tf_mail' : '#tf_auth_app';
+    closeModal();
+    $(selector).prop('checked', true);
+  });
+
   //for debug
   //console.log(window.tf_twofactor);
   if (window.tf_twofactor.enabled.email) {
@@ -133,7 +140,9 @@ function eventEmailAlreadySetup() {
   $('#tf_mail').off('change');
 
   $('#tf_email_setting').show().on('click', toggleEmailSetup);
-  $('#tf_mail').prop('checked', true);
+  $('#tf_mail').prop('checked', true).off('click').on('click', function() {
+    deactivateTf('email');
+  });
 }
 
 function clearEventSetupEmail() {
@@ -294,13 +303,22 @@ function eventFinalExternalApp() {
   $('#tf_app_done').off('click').on('click', function () {
     pwgToaster({ text: window.tf_twofactor.str_external_setup_success, icon: 'success' });
     closeCollapse('tf_auth_app');
+    $('#tf_app_totp').val('');
+    setupExternalAppSettings = false;
     eventExternalAlreadySetup();
   });
 }
 
 function eventExternalAlreadySetup() {
+  $('#tf_app_recovery_codes').hide();
+  $('#tf_app_send').show();
+
+  $('#tf_auth_app').off('change');
+
   $('#tf_external_app_setting').show().on('click', toggleAppSetup);
-  $('#tf_auth_app').prop('checked', true);
+  $('#tf_auth_app').prop('checked', true).off('click').on('click', function() {
+    deactivateTf('external_app');
+  });
 }
 
 function setupExternalApp(code = null) {
@@ -354,4 +372,60 @@ function setupExternalApp(code = null) {
   });
 
   eventSetupExtenalApp();
+}
+
+function closeModal() {
+  $('#tf_deactivate').off('click');
+  $('.tf-bg-modal').fadeOut();
+}
+
+function deactivateTf(method) {
+  $('#tf_save_modal').data('modal', method);
+
+  if (method == 'email') {
+    $('#tf_modal_title').text(window.tf_twofactor.str_deactivate_email);
+  } else {
+    $('#tf_modal_title').text(window.tf_twofactor.str_deactivate_external);
+  }
+
+  $('#tf_deactivate').off('click').on('click', function() {
+    sendDeactivateTf(method);
+  });
+
+  $('.tf-bg-modal').fadeIn();
+}
+
+function sendDeactivateTf(method) {
+  $.ajax({
+    url: 'ws.php?format=json&method=twofactor.deactivate',
+    type: "POST",
+    dataType: 'json',
+    data: {
+      pwg_token: PWG_TOKEN,
+      two_factor_method: method
+    },
+    success: function(res) {
+      if (res.stat === 'ok' && res.result) {
+        if (method == 'email') {
+          $('#tf_email_setting').hide().off('click');
+          $('#tf_mail').off('click').on('change', toggleEmailSetup);
+        } else {
+          $('#tf_external_app_setting').hide().off('click');
+          $('#tf_auth_app').off('click').on('change', toggleAppSetup);
+        }
+        closeModal();
+        pwgToaster({ 
+          text: method === 'email' 
+            ? window.tf_twofactor.str_deactivate_email_success 
+            : window.tf_twofactor.str_deactivate_external_success, 
+          icon: 'success'
+        });
+        return;
+      }
+      pwgToaster({ text: str_handle_error, icon: 'error' });
+    },
+    error: function(e) {
+      pwgToaster({ text: e.responseJSON?.message ?? str_handle_error, icon: 'error' });
+    }
+  })
 }
