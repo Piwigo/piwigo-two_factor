@@ -1,0 +1,165 @@
+#tf_verify_code,
+#tf_select_method,
+#tf_loading_email {
+  display: none;
+}
+
+.tf-loading-mail {
+  gap: 5px;
+}
+
+#tf-form {
+  margin-top: 50px !important;
+}
+
+.tf-btn-simple {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.tf-btn-simple p {
+  font-size: 12px !important;
+}
+
+.tf-btn-simple:hover p,
+.tf-btn-simple:hover i::before {
+  color: #ff7700 !important;
+}
+
+.tf-totp-code-verify .save {
+  justify-content: space-between !important;
+}
+
+.tf-totp-code-verify .btn-main {
+  margin-top: 0;
+}
+
+.tf-title-auth {
+  margin-bottom: 0 !important;
+}
+
+.tf-select-method {
+  display: flex;
+  margin-top: 48px;
+  gap: 30px;
+}
+
+.tf.profile-section {
+  max-width: max-content;
+  align-items: center;
+  padding: 40px;
+}
+
+.tf.profile-section.column-flex {
+  max-width: 320px;
+  padding: 20px;
+  margin-bottom: 0 !important;
+}
+.tf.profile-section.column-flex:hover {
+  box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.15);
+  transform: scale(1.01);
+  transition: transform 200ms ease-in-out;
+}
+
+.tf.profile-section.column-flex {
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 20px 30px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* Optionnel pour la hauteur */
+  height: 200px;
+  box-sizing: border-box;
+}
+
+.tf-icon-method {
+  font-size: 40px;
+  color: #ff7700 !important;
+}
+
+.tf-desc-method {
+  font-size: 12px !important;
+  text-wrap: nowrap;
+}
+
+.tf-underline {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.tf-send-again {
+  margin-bottom: 35px;
+}
+
+.tf-send-again p {
+  font-size: 14px !important;
+}
+
+.tf-contact-admin {
+  align-self: center;
+}
+
+.light .tf-contact-admin {
+  color:#3C3C3C;
+}
+
+.dark .tf-contact-admin {
+  color:#D6D6D6;
+}
+
+.dark .tf.profile-section.column-flex {
+  background-color: #303030;
+}
+
+.otp-container input::-webkit-outer-spin-button,
+.otp-container input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.otp-container input[type=number] {
+  -moz-appearance:textfield; /* Firefox */
+  appearance: textfield; /* Standard property */
+}
+
+.otp-container {
+  gap: 12px;
+  margin: 32px 0;
+  justify-content: center;
+}
+
+.otp-container .input-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0;
+}
+
+.otp-input {
+  text-align: center;
+  font-size: 26px;
+  border-radius: 10px;
+  transition: border 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+
+@media (max-width: 600px) {
+  .tf-select-method {
+    flex-direction: column;
+  }
+  .tf.profile-section {
+    width: 100%;
+    min-width: unset;
+  }
+}
+
+@media (max-width: 480px) {
+  .otp-input {
+    font-size: 20px;
+  }
+  .otp-container {
+    gap: 7px;
+  }
+}

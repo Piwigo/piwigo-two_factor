@@ -1,0 +1,171 @@
+window.toasterOnStart = window.toasterOnStart || [];
+let loadingMail = false;
+let timeBeforeResent = 30;
+let timeoutBeforeResent;
+let canSentMail = true;
+$(function() {
+  $('#tf_validate_email, #tf_send_again').on('click', function() {
+    $('#tf_use_method').text(str_use_email);
+    $('#method_totp').val('email');
+
+    if (loadingMail) return;
+    if (canSentMail) {
+      tfsendMail();
+    } else {
+      const text = sprintf(str_email_wait_until, timeBeforeResent);
+      pwgToaster({ text: text, icon: 'error' });
+    }
+  });
+  $('#tf_validate_app').on('click', function() {
+    $('#tf_use_method').text(str_use_app);
+    $('#method_totp').val('external_app');
+    tfNextStep('external_app');
+  });
+
+  const startOn = window.tfStartOn ?? false;
+  if ('email' == startOn) {
+    // $('#tf_validate_email').trigger('click');
+    $('#tf_use_method').text(str_use_email);
+    $('#method_totp').val('email');
+    $('#tf_send_again_in').hide();
+    tfNextStep('email');
+  } else if ('external_app' == startOn) {
+    $('#tf_validate_app').trigger('click');
+  } else {
+    $('#tf_select_method').show();
+  }
+
+  $('#tf_go_back').on('click', function() {
+    tfResetStep();
+  });
+
+  window.toasterOnStart.forEach((t, i) => {
+    setTimeout(() => {
+      pwgToaster({ text: t.text, icon: t.icon});
+    }, 200)
+  })
+
+  const inputs = $('#tf_verify_code .input-container input');
+  inputs.each(function(i, input) {
+    $(input).on('input', function(e) {
+      const val = $(input).val();
+      if (val.length > 1) {
+        const chars = val.split('');
+        $(input).val(chars[0]);
+        let j = i + 1;
+        chars.slice(1).forEach(char => {
+          if (j < inputs.length) {
+            $(inputs[j]).val(char);
+            j++;
+          }
+        });
+        if (j <= inputs.length) {
+          $(inputs[j-1]).focus();
+        }
+      } else if (val.length === 1 && i + 1 < inputs.length) {
+        $(inputs[i + 1]).focus();
+      }
+      updateInput();
+    });
+
+    $(input).on('keydown', function(e) {
+      // go back
+      if ((e.key === "Backspace" || e.key === "Delete" || e.key === "ArrowLeft") && !$(input).val() && i > 0) {
+        $(inputs[i - 1]).focus();
+      }
+
+      // go forward
+      if (e.key === "ArrowRight" && !$(input).val() && i+1 < inputs.length) {
+        $(inputs[i + 1]).focus();
+      }
+    });
+  });
+});
+
+function updateInput() {
+  let value = ''
+  $('#tf_verify_code input').each((i, input) => {
+    value += $(input).val().length == 1 ? $(input).val() : ''
+  });
+  $('#full_totp').val(value);
+  if (value.length == 6) {
+    console.log('perform click')
+    $('#tf_verify').trigger('click');
+  }
+}
+
+function tfNextStep(method) {
+  $('#tf_select_method').fadeOut(200, () => {
+    if (method === 'email') {
+      $('#tf_totp_external_app').hide();
+      $('#tf_totp_email').show();
+    } else {
+      $('#tf_totp_email').hide();
+      $('#tf_totp_external_app').show();
+    }
+
+    $('#tf_select_desc').hide();
+    $('#tf_verify_code').show();
+    $('#otp_1').trigger('focus');
+  });
+}
+
+function tfResetStep() {
+  $('#tf_verify_code').fadeOut(200, () => {
+    $('#tf_select_desc').show();
+    $('#tf_select_method').show();
+    $('#tf_verify_code input').val('');
+    $('#full_totp').val('');
+  });
+}
+
+function tfsendMail() {
+  $('#tf_loading_email').show();
+  loadingMail = true;
+  $.ajax({
+    url: 'ws.php?format=json&method=twofactor.sendEmail',
+    type: 'POST',
+    dataType: 'json',
+    data: {
+      tf_send_mail: true,
+      pwg_token: $('#pwg_token').val()
+    },
+    success: function(res) {
+      $('#tf_loading_email').hide();
+      loadingMail = false;
+
+      if (res) {
+        tfNextStep('email');
+        timeBeforeResent = 30;
+        tfResentEmail();
+        return;
+      }
+      pwgToaster({ text: res.message ?? str_handle_error, icon: 'error' });
+    },
+    error: function(e) {
+      $('#tf_loading_email').hide();
+      loadingMail = false;
+      pwgToaster({ text: e.responseJSON?.message ?? str_handle_error, icon: 'error' });
+    }
+  })
+}
+
+function tfResentEmail() {
+  clearTimeout(timeoutBeforeResent);
+
+  if (timeBeforeResent === 0) {
+    canSentMail = true;
+    $('#tf_send_again_in').hide(() => {
+      $('#tf_send_again').show();
+    });
+    return;
+  }
+
+  canSentMail = false;
+  $('#tf_send_again').hide();
+  const text = sprintf(str_send_again_in, timeBeforeResent);
+  $('#tf_send_again_in').text(text).show();
+  timeBeforeResent--;
+
+  timeoutBeforeResent = setTimeout(tfResentEmail, 1000);
+}
