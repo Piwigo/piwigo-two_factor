@@ -1,6 +1,8 @@
 #tf_verify_code,
 #tf_select_method,
-#tf_loading_email {
+#tf_loading_email,
+#tf_totp_external_app,
+#tf_recovery_code {
   display: none;
 }
 
@@ -27,11 +29,11 @@
   color: #ff7700 !important;
 }
 
-.tf-totp-code-verify .save {
+.tf-totp-form .save {
   justify-content: space-between !important;
 }
 
-.tf-totp-code-verify .btn-main {
+.tf-totp-form .btn-main {
   margin-top: 0;
 }
 
@@ -106,6 +108,14 @@
   display: flex;
   justify-self: center;
   margin-top: 20px !important;
+}
+
+#tf_totp_external_app u {
+  cursor: pointer;
+}
+
+#tf_recovery_code .input-container {
+  margin-top: 25px;
 }
 
 .light .tf-contact-admin {

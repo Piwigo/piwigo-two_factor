@@ -51,3 +51,6 @@ $lang['Do you really want to disable two factor authentication by email?'] = 'Vo
 $lang['Do you really want to disable two factor authentication by application?'] = 'Voulez-vous vraiment désactiver l\'authentification à deux facteurs par application ?';
 $lang['Two-factor authentication by email has been successfully deactivated'] = 'L\'authentification à deux facteurs par email a été désactivée avec succès';
 $lang['Two-factor authentication by application has been successfully deactivated'] = 'L\'authentification à deux facteurs par application a été désactivée avec succès';
+$lang['Can\'t connect? <u>Use a recovery code.</u>'] = 'Vous n\'arrivez pas à vous connecter ? <u>Utilisez un code de récupération.</u>';
+$lang['Enter one of your recovery codes'] = 'Saisissez l\'un de vos codes de récupération';
+$lang['Invalid recovery code'] = 'Code de récupération invalide';

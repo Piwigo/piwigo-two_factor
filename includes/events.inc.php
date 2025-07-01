@@ -62,6 +62,11 @@ function tf_loc_begin_identification()
 
   if (isset($_POST['tf_verify_code']))
   {
+    if (get_pwg_token() != $_POST['pwg_token'])
+    {
+      tf_force_logout();
+    }
+
     $code = $_POST['tf_verify_code'];
     $method = $_POST['tf_method_code'];
 
@@ -81,20 +86,42 @@ function tf_loc_begin_identification()
     $verify = new PwgTwoFactor($method)->verifyCode($code);
     if ($verify)
     {
-      tf_clean_login();
-      redirect(get_gallery_home_url());
+      tf_login_and_redirect();
     }
     else
     {
       if ($_SESSION[TF_SESSION_TRIES_LEFT] <= 0)
       {
-        tf_clean_login();
-        logout_user();
-        redirect(get_root_url().'identification.php?tf_login_error');
-        exit;
+        tf_force_logout();
       }
       
       return $template->block_footer_script(null, 'window.toasterOnStart.push({text: "'.l10n('The code is invalid').'", icon: "error"})');
+    }
+  }
+
+  if (isset($_POST['tf_recovery_codes']))
+  {
+    if (get_pwg_token() != $_POST['pwg_token'])
+    {
+      tf_force_logout();
+    }
+
+    $recovery_code = pwg_db_real_escape_string($_POST['tf_recovery_codes']);
+    $verify_code = new PwgTwoFactor('external_app')->verifyRecoveryCodes($recovery_code);
+
+    $_SESSION[TF_SESSION_TRIES_LEFT] = $_SESSION[TF_SESSION_TRIES_LEFT] - 1;
+
+    if ($verify_code)
+    {
+      tf_login_and_redirect();
+    }
+    else
+    {
+      if ($_SESSION[TF_SESSION_TRIES_LEFT] <= 0)
+      {
+        tf_force_logout();
+      }
+      return $template->block_footer_script(null, 'window.toasterOnStart.push({text: "'.l10n('Invalid recovery code').'", icon: "error"})');
     }
   }
 }

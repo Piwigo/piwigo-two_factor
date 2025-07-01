@@ -26,6 +26,26 @@ function tf_clean_login()
 }
 
 /**
+ * `Two Factor` : Force logout
+ */
+function tf_force_logout() {
+  tf_clean_login();
+  logout_user();
+  redirect(get_root_url().'identification.php?tf_login_error');
+  exit;
+}
+
+/**
+ * `Two Factor` : Login and redirect to home
+ */
+function tf_login_and_redirect()
+{
+  tf_clean_login();
+  redirect(get_gallery_home_url());
+  exit;
+}
+
+/**
  * `Two Factor` : Mail rate limit per $_SESSION 
  */
 function tf_mail_rate_limit($time, $session_key)

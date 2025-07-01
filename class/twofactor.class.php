@@ -236,4 +236,63 @@ DELETE FROM '.TF_TABLE.'
   {
     return PwgTOTP::generateCode($this->secret);
   }
+
+  /**
+   * Get Hashed Recovery Code
+   *
+   * @return string[]
+   */
+  public function getRecoveryCodes()
+  {
+    if ('email' === $this->method) return array();
+    $query = '
+SELECT *
+  FROM `'.TF_TABLE.'`
+  WHERE user_id = '.$this->user['id'].'
+  AND method = \'external_app\' 
+    ';
+
+    $result = pwg_db_fetch_assoc(pwg_query($query));
+    if ($result and isset($result['recovery_codes']))
+    {
+      return json_decode($result['recovery_codes']);
+    }
+    return array();
+  }
+
+  /**
+   * Verify Recovery Code
+   *
+   * @param string $code Recovery Code
+   * 
+   * @return bool
+   */
+  public function verifyRecoveryCodes($code)
+  {
+    $codes = $this->getRecoveryCodes();
+    if (0 === count($codes))
+    {
+      return false;
+    }
+
+    for ($i = 0; $i < count($codes); $i++)
+    {
+      $verify = pwg_password_verify($code, $codes[$i]);
+      if ($verify)
+      {
+        unset($codes[$i]);
+        $codes = count($codes) > 0 ? json_encode(array_values($codes)) : null;
+        single_update(
+          TF_TABLE,
+          array('recovery_codes' => $codes),
+          array(
+            'user_id' => $this->user['id'],
+            'method' => 'external_app'
+          )
+        );
+        return true;
+      }
+    }
+    return false;
+  }
 }

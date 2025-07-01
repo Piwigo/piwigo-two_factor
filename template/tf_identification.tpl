@@ -68,7 +68,7 @@ let str_handle_error = "{"An error has occured"|translate|escape:javascript}";
       <a href="{$TF_LOGOUT}" class="btn btn-cancel tf-logout" id="tf_cancel_auth">{'Cancel'|translate}</a>
     </div>
 
-    <form class="tf-totp-code-verify" id="tf_verify_code" method="post" action="{$F_ACTION}">
+    <form class="tf-totp-form" id="tf_verify_code" method="post" action="{$F_ACTION}">
       <p id="tf_use_method"></p>
       <div class="otp-container row-flex">
         <div class="input-container">
@@ -91,7 +91,7 @@ let str_handle_error = "{"An error has occured"|translate|escape:javascript}";
         </div>
         <input type="hidden" id="full_totp" name="tf_verify_code" />
         <input type="hidden" id="method_totp" name="tf_method_code" />
-        <input type="hidden" id="pwg_token" value="{$PWG_TOKEN}" />
+        <input type="hidden" id="pwg_token" name="pwg_token" value="{$PWG_TOKEN}" />
       </div>
       <div id="tf_totp_email" class="tf-send-again">
         <p>
@@ -100,15 +100,28 @@ let str_handle_error = "{"An error has occured"|translate|escape:javascript}";
             <span id="tf_send_again_in">{'Send it again in %s seconds.'|translate}</span>
           </p>
       </div>
-      <div id="tf_totp_external_app" class="">
-      </div>
       <div class="save">
         <button type="button" id="tf_go_back" class="tf-btn-simple row-flex"><i class="gallery-icon-left"></i><p>{'Choose another authentication method'|translate|escape:html}</p></button>
         <button type="submit" class="btn btn-main" id="tf_verify">{'Verify'|translate}</button>
       </div>
     </form>
+
+    <form class="tf-totp-form" id="tf_recovery_code" method="post" action="{$F_ACTION}">
+      <p>{"Enter one of your recovery codes"|translate}</p>
+      <div class="input-container">
+        <input class="otp-input" id="tf_recovery_input" name="tf_recovery_codes" autocomplete="no">
+      </div>
+      <input type="hidden" id="pwg_token_recovery" name="pwg_token" value="{$PWG_TOKEN}" />
+      <div class="save">
+        <button type="button" id="tf_reset_recovery" class="tf-btn-simple row-flex"><p>{'Cancel'|translate|escape:html}</p></button>
+        <button type="submit" class="btn btn-main" id="tf_recovery">{'Send'|translate}</button>
+      </div>
+    </form>
   </section>
-  <p class="tf-contact-admin">{"If you are unable to connect, please contact the webmaster"|translate}</p>
+  <div class="tf-contact-admin">
+    <p id="tf_contact_admin">{"If you are unable to connect, please contact the webmaster"|translate}</p>
+    <p id="tf_totp_external_app" >{"Can't connect? <u>Use a recovery code.</u>"|translate}</p>
+  </div>
 
   {if count($language_options) > 1}
     <section id="language-switch">

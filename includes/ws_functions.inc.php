@@ -105,6 +105,8 @@ function tf_add_methods($arr)
 
 function tf_setup_generic($params, $method)
 {
+  global $logger, $user;
+
   // We can only set the 2FA if we are connected with pwg_ui
   // or not a guest
   if (is_a_guest() or !connected_with_pwg_ui())
@@ -135,6 +137,8 @@ function tf_setup_generic($params, $method)
     return new PwgError(401, 'Error during initialisation two factor for method:' . $method);
   }
 
+  // logger
+  $logger->info('[two_factor][user_id='.$user['id'].'][method='.$method.'][setup_step='.($setup ? 'initialized' : 'finalized').']');
   return $setup;
 }
 
@@ -214,12 +218,6 @@ function tf_send_email($params)
     return new PwgError(403, l10n('Please wait %s seconds before sending an email again.', $limit_rate));
   }
 
-  if (get_pwg_token() != $_POST['pwg_token'])
-  {
-    return new PwgError(401, 'Invalid token');
-    
-  }
-
   if (!PwgTwoFactor::isEnabled($user['id'], 'email'))
   {
     return new PwgError(401, 'Email isn\'t initialized');
@@ -247,7 +245,7 @@ function tf_send_email($params)
  */
 function tf_deactivate($params)
 {
-  global $user;
+  global $user, $logger;
 
   if (is_a_guest() or !connected_with_pwg_ui())
   {
@@ -274,6 +272,8 @@ function tf_deactivate($params)
   if (PwgTwoFactor::isEnabled($user_id, $params['two_factor_method']))
   {
     new PwgTwoFactor($params['two_factor_method'])->deleteSecret($user_id);
+    // logger
+    $logger->info('[two_factor][user_id='.$user_id.'][method='.$params['two_factor_method'].'][action=deactivated]');
     return true;
   }
 

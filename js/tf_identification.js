@@ -3,7 +3,9 @@ let loadingMail = false;
 let timeBeforeResent = 30;
 let timeoutBeforeResent;
 let canSentMail = true;
+let tf_pwg_token;
 $(function() {
+  tf_pwg_token = $('#pwg_token').val();
   $('#tf_validate_email, #tf_send_again').on('click', function() {
     $('#tf_use_method').text(str_use_email);
     $('#method_totp').val('email');
@@ -89,7 +91,6 @@ function updateInput() {
   });
   $('#full_totp').val(value);
   if (value.length == 6) {
-    console.log('perform click')
     $('#tf_verify').trigger('click');
   }
 }
@@ -98,24 +99,27 @@ function tfNextStep(method) {
   $('#tf_select_method').fadeOut(200, () => {
     if (method === 'email') {
       $('#tf_totp_external_app').hide();
-      $('#tf_totp_email').show();
+      $('#tf_totp_email, #tf_contact_admin').show();
     } else {
-      $('#tf_totp_email').hide();
+      $('#tf_totp_email, #tf_contact_admin').hide();
       $('#tf_totp_external_app').show();
+      tfEventRecoveryCode();
     }
 
     $('#tf_select_desc').hide();
     $('#tf_verify_code').show();
+    $('#pwg_token').val(tf_pwg_token);
     $('#otp_1').trigger('focus');
   });
 }
 
 function tfResetStep() {
   $('#tf_verify_code').fadeOut(200, () => {
-    $('#tf_select_desc').show();
-    $('#tf_select_method').show();
+    $('#tf_totp_external_app, #tf_recovery_code, #tf_verify_code').hide();
+    $('#tf_select_desc, #tf_select_method, #tf_contact_admin').show();
     $('#tf_verify_code input').val('');
     $('#full_totp').val('');
+    tfClearEventRecoveryCode();
   });
 }
 
@@ -128,7 +132,7 @@ function tfsendMail() {
     dataType: 'json',
     data: {
       tf_send_mail: true,
-      pwg_token: $('#pwg_token').val()
+      pwg_token: tf_pwg_token
     },
     success: function(res) {
       $('#tf_loading_email').hide();
@@ -168,4 +172,21 @@ function tfResentEmail() {
   timeBeforeResent--;
 
   timeoutBeforeResent = setTimeout(tfResentEmail, 1000);
+}
+
+function tfEventRecoveryCode() {
+  $('#tf_totp_external_app u').off('click').on('click', function() {
+    $('#tf_verify_code').hide();
+    // $('#pwg_token_recovery').val(tf_pwg_token);
+    $('#tf_recovery_input').val('');
+    $('#tf_recovery_code').show();
+  });
+
+  $('#tf_reset_recovery').off('click').on('click', function() {
+    tfResetStep();
+  });
+}
+
+function tfClearEventRecoveryCode() {
+  $('#tf_totp_external_app u').off('click');
 }
