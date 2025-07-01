@@ -128,7 +128,15 @@ function tf_setup_generic($params, $method)
 
   if (isset($params['code']))
   {
-    return $tf->finaliseSetup($params['code']);
+    $activated = $tf->finaliseSetup($params['code']);
+    if ($activated) {
+      $logger->info('[two_factor][user_id='.$user['id'].'][method='.$method.'][setup_step=finalized]');
+      return true;
+    }
+    else
+    {
+      return false;
+    }
   }
 
   $setup = $tf->setup();
@@ -138,7 +146,7 @@ function tf_setup_generic($params, $method)
   }
 
   // logger
-  $logger->info('[two_factor][user_id='.$user['id'].'][method='.$method.'][setup_step='.($setup ? 'initialized' : 'finalized').']');
+  $logger->info('[two_factor][user_id='.$user['id'].'][method='.$method.'][setup_step=initialized]');
   return $setup;
 }
 
