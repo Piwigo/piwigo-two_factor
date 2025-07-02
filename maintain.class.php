@@ -4,14 +4,6 @@ defined('PHPWG_ROOT_PATH') or die('Hacking attempt!');
 class two_factor_maintain extends PluginMaintain
 {
   private $table;
-  private $default_conf = array(
-    'external_app' => array(
-      'activated' => true,
-    ),
-    'email' => array(
-      'activated' => false,
-    )
-  );
 
   function __construct($plugin_id)
   {
@@ -41,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `'. $this->table .'` (
 
     if (empty($conf['two_factor']))
     {
-      conf_update_param('two_factor', $this->default_conf, true);
+      conf_update_param('two_factor', tf_get_default_conf(), true);
     }
   }
 

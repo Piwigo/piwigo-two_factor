@@ -66,6 +66,25 @@ function tf_add_methods($arr)
   );
 
   $service->addMethod(
+    'twofactor.setConfig',
+    'tf_set_config',
+    array(
+      'config' => array(
+        'flags' => WS_PARAM_FORCE_ARRAY,
+        'info' => 'Must be an array',
+      ),
+      'pwg_token' => array(),
+    ),
+    '',
+    null,
+    array(
+      'hidden' => false,
+      'post_only' => true,
+      'admin_only' => true,
+    )
+  );
+
+  $service->addMethod(
     'twofactor.sendEmail',
     'tf_send_email',
     array(
@@ -201,6 +220,106 @@ function tf_status()
     'external_app' => PwgTwoFactor::isEnabled($user['id'], 'external_app'),
     'email' => PwgTwoFactor::isEnabled($user['id'], 'email')
   );
+}
+
+/**
+ * `Two Factor` : Set config
+ */
+function tf_set_config($params)
+{
+  if (get_pwg_token() != $params['pwg_token'])
+  {
+    return new PwgError(403, 'Invalid security token');
+  }
+
+  if (!connected_with_pwg_ui() or !is_webmaster())
+  {
+    return new PwgError(401, 'Access Denied');
+  }
+
+  if (
+    !isset($params['config']['general'])
+    or !isset($params['config']['external_app'])
+    or !isset($params['config']['email'])
+    )
+  {
+    return new PwgError(403, 'Missing parameter, must have: general, external_app, email');
+  }
+
+  $validated_conf = array();
+  foreach ($params['config'] as $key => $config)
+  {
+    switch ($key)
+    {
+      case 'general':
+        if (
+          !isset($config['max_attempts']) 
+          or !preg_match('/^\d+$/', $config['max_attempts'])
+          or !isset($config['lockout_duration']) 
+          or !preg_match('/^\d+$/', $config['lockout_duration'])
+        ) {
+          return new PwgError(403, 'Missing parameter general, must have: max_attempts, lockout_duration both as integer');
+        }
+        $validated_conf[$key]['max_attempts'] = intval($config['max_attempts']);
+        $validated_conf[$key]['lockout_duration'] = intval($config['lockout_duration']);
+        break;
+
+      case 'external_app':
+        if (
+          !isset($config['enabled'])
+          or !isset($config['totp_window'])
+          or !preg_match('/^\d+$/', $config['totp_window'])
+          or !isset($config['code_lifetime']) 
+          or !preg_match('/^\d+$/', $config['code_lifetime'])
+        ) {
+          return new PwgError(403, 'Missing parameter external_app, must have: enabled as bool, totp_window, code_lifetime both as integer');
+        }
+
+        $validated_conf[$key]['totp_window'] = intval($config['totp_window']);
+        $validated_conf[$key]['code_lifetime'] = intval($config['code_lifetime']);
+        $validated_conf[$key]['enabled'] = get_boolean($config['enabled']);
+        break;
+
+      case 'email':
+        if (
+          !isset($config['enabled'])
+          or !isset($config['totp_window'])
+          or !preg_match('/^\d+$/', $config['totp_window'])
+          or !isset($config['code_lifetime'])
+          or !preg_match('/^\d+$/', $config['code_lifetime'])
+          or !isset($config['setup_delay'])
+          or !preg_match('/^\d+$/', $config['setup_delay'])
+          or !isset($config['verify_delay'])
+          or !preg_match('/^\d+$/', $config['verify_delay'])
+        ) {
+          return new PwgError(403, 'Missing parameter email, must have: enabled as bool, totp_window, code_lifetime, verify_delay, setup_delay y\'all as integer');
+        }
+
+        $validated_conf[$key]['totp_window'] = intval($config['totp_window']);
+        $validated_conf[$key]['code_lifetime'] = intval($config['code_lifetime']);
+        $validated_conf[$key]['setup_delay'] = intval($config['setup_delay']);
+        $validated_conf[$key]['verify_delay'] = intval($config['verify_delay']);
+        $validated_conf[$key]['enabled'] = get_boolean($config['enabled']);
+        break;
+    }
+  }
+
+  conf_update_param('two_factor', $validated_conf, true);
+  $tf_config = safe_unserialize(conf_get_param('two_factor'));
+
+  return array(
+    'status' => 'success',
+    'message' => 'The configuration has been successfully saved.',
+    'configuration' => $tf_config,
+  );
+}
+
+/**
+ * `Two Factor` : Reset config
+ */
+function tf_reset_config()
+{
+  //
 }
 
 /**

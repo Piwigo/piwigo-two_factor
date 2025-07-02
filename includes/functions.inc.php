@@ -86,3 +86,30 @@ function tf_generate_mail_template($username, $code, $setup = false)
   
   return $message;
 }
+
+/**
+ * `Two Factor` : get default conf
+ */
+function tf_get_default_conf()
+{
+  return array(
+    'external_app' => array(
+      'enabled' => true,                      // Enable 2FA by external app
+      'totp_window' => 1,                     // TOTP tolerance window (±30 seconds)
+      'code_lifetime' => 30,                  // TOTP code lifetime in seconds (30 = 30 seconds)
+    ),
+    'email' => array(
+      'enabled' => false,                     // Enable 2FA by email
+      'totp_window' => 1,                     // TOTP tolerance window (±30 seconds)
+      'code_lifetime' => 900,                 // Email code lifetime in seconds (900 = 15 minutes)
+      'setup_delay' => 60,                    // Delay between setup email sends in seconds
+      'verify_delay' => 30                    // Delay between verification email sends in seconds
+    ),
+    'general' => array(
+      'max_attempts' => 3,                    // Maximum number of failed attempts before lockout
+      'lockout_duration' => 300,              // Lockout duration in seconds after max attempts (300 = 5 minutes)
+      // 'auto_enable_existing_users' => false,  // later
+      // 'auto_enable_new_users' => false,       // later
+    )
+  );
+}

@@ -6,7 +6,7 @@ Plugin URI: auto
 Author: Piwigo team
 Author URI: https://github.com/Piwigo
 Description: Two Factor Authenfication method.
-Has Settings: true
+Has Settings: Webmaster
 */
 
 if (!defined('PHPWG_ROOT_PATH')) die('Hacking attempt!');
@@ -57,9 +57,15 @@ add_event_handler('loc_begin_identification', 'tf_loc_begin_identification', EVE
 add_event_handler('loc_end_identification', 'tf_loc_end_identification', EVENT_HANDLER_PRIORITY_NEUTRAL, $tf_events);
 add_event_handler('try_log_user', 'tf_try_log_user', PHP_INT_MAX, $tf_events);
 
+if (defined('IN_ADMIN'))
+{
+  $tf_admin_events = TF_REALPATH.'/includes/admin_events.inc.php';
+  add_event_handler('loc_end_admin', 'tf_add_tab_users_modal', EVENT_HANDLER_PRIORITY_NEUTRAL, $tf_admin_events);
+} 
+
 function tf_init()
 {
-  global $user, $template, $page;
+  global $user, $template, $conf;
   // for debug
   // tf_clean_login();
   
@@ -67,6 +73,8 @@ function tf_init()
   $template->assign(array(
     'TF_PATH' => TF_PATH,
   ));
+  $conf['two_factor'] = safe_unserialize($conf['two_factor']);
+
   include_once(TF_REALPATH . '/class/twofactor.class.php');
   if (!is_a_guest() and isset($_SESSION[TF_SESSION_VALIDATED]) and true !== $_SESSION[TF_SESSION_VALIDATED])
   {

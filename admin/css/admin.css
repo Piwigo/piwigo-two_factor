@@ -1,0 +1,121 @@
+#tf_unsaved_changes,
+#tf_saving_changes,
+#tf_error_changes,
+.tf-collapse-container {
+  display: none;
+}
+
+.tf-container input::-webkit-outer-spin-button,
+.tf-container input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+   margin: 0;
+}
+
+.tf-container input[type=number] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+.tf-container {
+  margin: 20px;
+  margin-bottom: 70px;
+}
+
+.tf-config {
+  text-align: start;
+  font-size: 14px;
+}
+
+.tf-icon-header .tf-icon {
+  border-radius: 9999px;
+  padding: 10px;
+  font-size: 2em;
+}
+
+/* .tf-config .tf-icon-header {
+  padding-bottom: 15px;
+} */
+
+.tf-config .tf-icon,
+.tf-icon-text {
+  font-size: 14px;
+  padding: 5px;
+  font-weight: bold;
+}
+
+.tf-input-container,
+.tf-config-general,
+.tf-config-method {
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.tf-config-general,
+.tf-config-method {
+  gap: 20px;
+}
+
+.tf-config-method .tf-input-container {
+  flex-direction: row;
+  align-items: center;
+}
+
+.tf-collapse {
+  padding-left: 75px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tf-input-container input {
+  padding: 10px;
+  border-radius: 5px;
+  border: 2px solid #d3d3d3;
+  background-color: white;
+  width: fit-content;
+}
+
+.tf-config-method input[type="number"] {
+  width: 50px;
+}
+
+.tf-save {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  border-top: 1px solid #ececec;
+  padding: 10px;
+  display: flex;
+  justify-content: flex-end;
+  background-color: white;
+  align-items: center;
+}
+
+.tf-save .badge-container {
+  margin-right: 0;
+}
+
+#content {
+  min-height: auto;
+}
+
+.tf-app {
+  margin-top: 40px;
+}
+
+.tf-method {
+  margin-top: 10px;
+}
+
+.dark .tf-input-container input {
+  border: 2px solid #444;
+  background-color: #333;
+}
+
+.dark.tf-save { 
+  background-color: #444;
+  border-color: rgba(0, 0, 0, 0.2);
+}

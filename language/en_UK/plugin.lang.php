@@ -1,6 +1,7 @@
 <?php
 
 $lang['Two Factor Authentication'] = 'Two Factor Authentication (2FA)';
+$lang['two_factor_js'] = 'Two Factor Authentication';
 $lang['Configure your two-factor authentication settings and secure your acount'] = 'Configure your two-factor authentication settings and secure your acount';
 $lang['Set up using an authentication app'] = 'Set up using an authentication app';
 $lang['Use an external authentication application to obtain authentication codes.'] = 'Use an external authentication application to obtain authentication codes.';
