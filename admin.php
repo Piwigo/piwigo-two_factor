@@ -1,6 +1,11 @@
 <?php
 if (!defined('PHPWG_ROOT_PATH')) die('Hacking attempt!');
 
+// +-----------------------------------------------------------------------+
+// | Check Access and exit when user status is not ok                      |
+// +-----------------------------------------------------------------------+
+check_status(ACCESS_WEBMASTER);
+
 global $page, $conf;
 
 $page['tab'] = 'config';

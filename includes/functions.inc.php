@@ -28,10 +28,26 @@ function tf_clean_login()
 /**
  * `Two Factor` : Force logout
  */
-function tf_force_logout() {
+function tf_force_logout($lockout_duration = null) {
   tf_clean_login();
   logout_user();
-  redirect(get_root_url().'identification.php?tf_login_error');
+  if (isset($lockout_duration['expires_in']))
+  {
+    $wait = '0s';
+    if ($lockout_duration['expires_in']->i > 0)
+    {
+      $wait = $lockout_duration['expires_in']->i . '-m';
+    }
+    else
+    {
+      $wait = $lockout_duration['expires_in']->s . '-s';
+    }
+    redirect(get_root_url().'identification.php?tf_lockout='.$wait);
+  }
+  else
+  {
+    redirect(get_root_url().'identification.php?tf_login_error');
+  }
   exit;
 }
 
@@ -40,6 +56,15 @@ function tf_force_logout() {
  */
 function tf_login_and_redirect()
 {
+  global $user;
+  if ($user['tf_lockout_duration'])
+  {
+    single_update(
+      USER_INFOS_TABLE,
+      array('tf_lockout_duration' => null),
+      array('user_id' => $user['id'])
+    );
+  }
   tf_clean_login();
   redirect(get_gallery_home_url());
   exit;

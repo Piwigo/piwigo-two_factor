@@ -56,6 +56,7 @@ add_event_handler('ws_add_methods', 'tf_add_methods', EVENT_HANDLER_PRIORITY_NEU
 add_event_handler('loc_begin_identification', 'tf_loc_begin_identification', EVENT_HANDLER_PRIORITY_NEUTRAL, $tf_events);
 add_event_handler('loc_end_identification', 'tf_loc_end_identification', EVENT_HANDLER_PRIORITY_NEUTRAL, $tf_events);
 add_event_handler('try_log_user', 'tf_try_log_user', PHP_INT_MAX, $tf_events);
+// add_event_handler('ws_users_getList', 'tf_ws_users_getList', EVENT_HANDLER_PRIORITY_NEUTRAL, $tf_events);
 
 if (defined('IN_ADMIN'))
 {

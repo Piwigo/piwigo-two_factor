@@ -31,6 +31,13 @@ CREATE TABLE IF NOT EXISTS `'. $this->table .'` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8
 ;');
 
+    $result = pwg_query('SHOW COLUMNS FROM `'.USER_INFOS_TABLE.'` LIKE "tf_lockout_duration";');
+    if (!pwg_db_num_rows($result))
+    {
+      pwg_query('ALTER TABLE `'.USER_INFOS_TABLE.'` ADD COLUMN `tf_lockout_duration` DATETIME DEFAULT NULL;');
+    }
+
+
     if (empty($conf['two_factor']))
     {
       conf_update_param('two_factor', tf_get_default_conf(), true);
@@ -65,6 +72,7 @@ CREATE TABLE IF NOT EXISTS `'. $this->table .'` (
   function uninstall()
   {
     pwg_query('DROP TABLE `'. $this->table .'`;');
+    pwg_query('ALTER TABLE `'.USER_INFOS_TABLE.'` DROP COLUMN `tf_lockout_duration`;');
     conf_delete_param('two_factor');
   }
 

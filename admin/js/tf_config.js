@@ -181,6 +181,7 @@ function sendConfig(config) {
       tferrorsChanges.hide();
       if (res.stat === 'ok') {
         tfsaveChanges.fadeIn();
+        TF_CONFIG = {...res.result.configuration};
         return;
       }
       tferrorsChanges.fadeIn();

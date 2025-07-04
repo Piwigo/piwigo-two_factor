@@ -37,12 +37,13 @@ class PwgTwoFactor
    *
    * @return string|null
    */
-  private function getStoredSecret()
+  private function getStoredSecret($user_id = null)
   {
+    $user_id = $user_id ?? pwg_db_real_escape_string($this->user['id']);
     $query = '
 SELECT secret
   FROM '.TF_TABLE.'
-WHERE user_id = '.$this->user['id'].'
+WHERE user_id = '.$user_id.'
   AND method = \''.$this->method.'\'
 ;';
     $result = pwg_db_fetch_assoc(pwg_query($query));
@@ -65,7 +66,7 @@ WHERE user_id = '.$this->user['id'].'
     $query = '
 SELECT COUNT(*)
   FROM ' . TF_TABLE . '
-WHERE user_id = ' . $user_id . '
+WHERE user_id = ' . pwg_db_real_escape_string($user_id) . '
 ';
     if ($method and self::isAllowedMethod($method)) {
       $query .= ' AND method = \'' . pwg_db_real_escape_string($method) . '\'';
@@ -78,6 +79,80 @@ WHERE user_id = ' . $user_id . '
       return true;
     }
     return false;
+  }
+
+  /**
+   * Get the lockout duration for the current user
+   *
+   * @return array|null lockout duration date and diff, null if empty
+   * 
+   */
+  public function getLockoutDuration()
+  {
+    $query = '
+SELECT
+  tf_lockout_duration,
+  NOW(),
+  NOW() > tf_lockout_duration
+  FROM `'.USER_INFOS_TABLE.'`
+  WHERE user_id = '.$this->user['id'].'
+;';
+
+    list($lockout_duration, $now, $can_login) = pwg_db_fetch_row(pwg_query($query));
+
+    // no lockout or lockout expired
+    if (empty($lockout_duration) || $can_login === null || $can_login == 1)
+    {
+        return null;
+    }
+    
+    $expired_on = str2DateTime($lockout_duration);
+    $now = str2DateTime($now);
+    $diff = dateDiff($now, $expired_on);
+
+    return array(
+      'lockout_duration' => $lockout_duration,
+      'expires_in' => $diff
+    );
+  }
+
+  /**
+   * Set the lockout duration for the current user
+   *
+   * @return array lockout duration date and diff
+   * 
+   */
+  public function setLockoutDuration()
+  {
+    global $conf;
+    $lockout_duration = $conf['two_factor']['general']['lockout_duration'];
+    list($db_future) = pwg_db_fetch_row(pwg_query('SELECT ADDDATE(NOW(), INTERVAL '.$lockout_duration.' SECOND);'));
+    single_update(
+      USER_INFOS_TABLE,
+      array('tf_lockout_duration' => $db_future),
+      array('user_id' => $this->user['id'])
+    );
+    return $this->getLockoutDuration();
+  }
+
+  /**
+   * Clear the lockout duration
+   * 
+   * @param string|null $user_id if null we use the current id user
+   *
+   * @return bool
+   * 
+   */
+  public function clearLockoutDuration($user_id = null)
+  {
+    $user_id = $user_id ?? $this->user['id'];
+    single_update(
+      USER_INFOS_TABLE,
+      array('tf_lockout_duration' => null),
+      array('user_id' => pwg_db_real_escape_string($this->user['id']))
+    );
+
+    return true;
   }
 
   /**
@@ -199,7 +274,7 @@ INSERT INTO '.TF_TABLE.' (user_id, secret, method, recovery_codes, enabled_at)
    */
   public function deleteSecret($user_id = null)
   {
-    if ($this->getStoredSecret())
+    if ($this->getStoredSecret($user_id))
     {
       $user_id = $user_id ?? pwg_db_real_escape_string($this->user['id']);
       $method = pwg_db_real_escape_string($this->method);

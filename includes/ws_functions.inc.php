@@ -18,7 +18,8 @@ function tf_add_methods($arr)
         'info' => 'To check the user email address'
       ),
       'code' => array(
-        'flags' => WS_PARAM_OPTIONAL|WS_TYPE_POSITIVE,
+        'flags' => WS_PARAM_OPTIONAL,
+        'type' => WS_TYPE_POSITIVE,
         'info' => 'Totp code'
       ),
       'pwg_token' => array(),
@@ -37,7 +38,8 @@ function tf_add_methods($arr)
     'tf_setup_external_app',
     array(
       'code' => array(
-        'flags' => WS_PARAM_OPTIONAL|WS_TYPE_POSITIVE,
+        'flags' => WS_PARAM_OPTIONAL,
+        'type' => WS_TYPE_POSITIVE,
         'info' => 'Totp code'
       ),
       'pwg_token' => array(),
@@ -55,7 +57,13 @@ function tf_add_methods($arr)
   $service->addMethod(
     'twofactor.status',
     'tf_status',
-    array(),
+    array(
+      'user_id' => array(
+        'flags' => WS_PARAM_OPTIONAL,
+        'type' => WS_TYPE_ID,
+        'info' => 'Only webmaster can see 2FA status for an another user'
+      ),
+    ),
     '',
     null,
     array(
@@ -106,10 +114,6 @@ function tf_add_methods($arr)
       'two_factor_method' => array(
         'info' => 'Only email or external_app'
       ),
-      'user_id' => array(
-        'flags' => WS_PARAM_OPTIONAL,
-        'info' => 'Only webmaster can deactivate 2FA for an another user'
-      ),
       'pwg_token' => array(),
     ),
     '',
@@ -118,6 +122,30 @@ function tf_add_methods($arr)
       'hidden' => false,
       'post_only' => true,
       'admin_only' => false,
+    )
+  );
+
+  $service->addMethod(
+    'twofactor.adminDeactivate',
+    'tf_admin_deactivate',
+    array(
+      'user_id' => array(
+        'type' => WS_TYPE_ID,
+        'info' => 'Only webmaster can deactivate 2FA for an another user'
+      ),
+      // 'next_login' => array(
+      //   'default' => false,
+      //   'type' => WS_TYPE_BOOL,
+      //   'info' => 'Deactivate only for next connection for both method. default: false'
+      // ),
+      'pwg_token' => array(),
+    ),
+    'Only for webmaster',
+    null,
+    array(
+      'hidden' => false,
+      'post_only' => true,
+      'admin_only' => true,
     )
   );
 }
@@ -208,17 +236,25 @@ function tf_setup_external_app($params)
 /**
  * `Two Factor` : Get 2FA Status
  */
-function tf_status()
+function tf_status($params)
 {
+  global $user;
+
   if (is_a_guest())
   {
     return new PwgError(401, 'Acess Denied');
   }
 
-  global $user;
+  if (!is_webmaster() and isset($params['user_id']) and $user['id'] != $params['user_id'])
+  {
+    return new PwgError(401, 'Acess Denied');
+  }
+
+  $user_id = $params['user_id'] ?? $user['id'];
+
   return array(
-    'external_app' => PwgTwoFactor::isEnabled($user['id'], 'external_app'),
-    'email' => PwgTwoFactor::isEnabled($user['id'], 'email')
+    'external_app' => PwgTwoFactor::isEnabled($user_id, 'external_app'),
+    'email' => PwgTwoFactor::isEnabled($user_id, 'email')
   );
 }
 
@@ -254,11 +290,11 @@ function tf_set_config($params)
       case 'general':
         if (
           !isset($config['max_attempts']) 
-          or !preg_match('/^\d+$/', $config['max_attempts'])
+          or !preg_match('/^[1-9]\d*$/', $config['max_attempts'])
           or !isset($config['lockout_duration']) 
           or !preg_match('/^\d+$/', $config['lockout_duration'])
         ) {
-          return new PwgError(403, 'Missing parameter general, must have: max_attempts, lockout_duration both as integer');
+          return new PwgError(403, 'Missing parameter general, must have: max_attempts, lockout_duration both as integer positive');
         }
         $validated_conf[$key]['max_attempts'] = intval($config['max_attempts']);
         $validated_conf[$key]['lockout_duration'] = intval($config['lockout_duration']);
@@ -272,7 +308,7 @@ function tf_set_config($params)
           or !isset($config['code_lifetime']) 
           or !preg_match('/^\d+$/', $config['code_lifetime'])
         ) {
-          return new PwgError(403, 'Missing parameter external_app, must have: enabled as bool, totp_window, code_lifetime both as integer');
+          return new PwgError(403, 'Missing parameter external_app, must have: enabled as bool, totp_window, code_lifetime both as integer positive');
         }
 
         $validated_conf[$key]['totp_window'] = intval($config['totp_window']);
@@ -308,7 +344,6 @@ function tf_set_config($params)
   $tf_config = safe_unserialize(conf_get_param('two_factor'));
 
   return array(
-    'status' => 'success',
     'message' => 'The configuration has been successfully saved.',
     'configuration' => $tf_config,
   );
@@ -389,20 +424,59 @@ function tf_deactivate($params)
     return new PwgError(401, 'Method can be only email or external_app');
   }
 
-  if (!is_webmaster() and isset($params['user_id']) and $user['id'] != $params['user_id'])
-  {
-    return new PwgError(401, 'Acess Denied');
-  }
-
-  $user_id = $params['user_id'] ?? $user['id'];
+  $user_id = $user['id'];
 
   if (PwgTwoFactor::isEnabled($user_id, $params['two_factor_method']))
   {
-    new PwgTwoFactor($params['two_factor_method'])->deleteSecret($user_id);
+    new PwgTwoFactor($params['two_factor_method'])->deleteSecret(pwg_db_real_escape_string($user_id));
     // logger
     $logger->info('[two_factor][user_id='.$user_id.'][method='.$params['two_factor_method'].'][action=deactivated]');
     return true;
   }
 
   return false;
+}
+
+/**
+ * `Two Factor` : Admin deactivate Two Factor
+ */
+function tf_admin_deactivate($params)
+{
+  global $user, $logger;
+
+  if (!is_webmaster() or !connected_with_pwg_ui())
+  {
+    return new PwgError(401, 'Access Denied');
+  }
+
+  if (get_pwg_token() != $params['pwg_token'])
+  {
+    return new PwgError(403, 'Invalid security token');
+  }
+
+  $user_id = $params['user_id'];
+
+  if (PwgTwoFactor::isEnabled($user_id, 'external_app'))
+  {
+    $delete_external = new PwgTwoFactor('external_app')->deleteSecret(pwg_db_real_escape_string($user_id));
+    if (!$delete_external)
+    {
+      return new PwgError(500, 'Error external app');
+    }
+    // logger
+    $logger->info('[two_factor][user_id='.$user_id.'][method=external_app][action=deactivated][by_user_id='.$user['id'].']');
+  }
+
+  if (PwgTwoFactor::isEnabled($user_id, 'email'))
+  {
+    $delete_email = new PwgTwoFactor('email')->deleteSecret(pwg_db_real_escape_string($user_id));
+    if (!$delete_email)
+    {
+      return new PwgError(500, 'Error email');
+    }
+    // logger
+    $logger->info('[two_factor][user_id='.$user_id.'][method=email][action=deactivated][by_user_id='.$user['id'].']');
+  }
+
+  return true;
 }

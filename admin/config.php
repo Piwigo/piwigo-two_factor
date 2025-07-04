@@ -8,4 +8,4 @@ $template->assign(array(
   'PWG_TOKEN' => get_pwg_token(),
 ));
 
-$template->block_footer_script(null, 'const TF_CONFIG = '.json_encode($conf['two_factor']).';');
+$template->block_footer_script(null, 'let TF_CONFIG = '.json_encode($conf['two_factor']).';');
