@@ -72,3 +72,4 @@ $lang['Maximum number of failed attempts before lockout'] = 'Maximum number of f
 $lang['Lockout duration in seconds after max attempts (300 = 5 minutes)'] = 'Lockout duration in seconds after max attempts (300 = 5 minutes)';
 $lang['Enable 2FA by application'] = 'Enable 2FA by application';
 $lang['Enable 2FA by email'] = 'Enable 2FA by email';
+$lang['To activate the Two Factor Authentication plugin, you need to enable "standard pages" in the Piwigo settings.'] = 'To activate the Two Factor Authentication plugin, you need to enable "standard pages" in the Piwigo settings.';

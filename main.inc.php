@@ -23,6 +23,18 @@ if (basename(dirname(__FILE__)) != 'two_factor')
   return;
 }
 
+// Checks whether standard pages are enabled
+if (!conf_get_param('use_standard_pages', false))
+{
+  add_event_handler('init', 'tf_error_st');
+  function tf_error_st()
+  {
+    global $page;
+    $page['warnings'][] = l10n('To activate the Two Factor plugin, you need to enable "standard pages" in the Piwigo settings.');
+  }
+  return;
+}
+
 // +-----------------------------------------------------------------------+
 // | Define plugin constants                                               |
 // +-----------------------------------------------------------------------+
