@@ -79,7 +79,7 @@ Two Factor Authentication is a security plugin for Piwigo. This plugin adds an e
 ![Configuration of Two Factor](https://sandbox.piwigo.com/uploads/4/y/1/4y1zzhnrnw//2025/07/06/20250706152431-26426f0b.png)
 
 ### User Setup Process
-![Two Factor User Setup Process](https://sandbox.piwigo.com/uploads/4/y/1/4y1zzhnrnw//2025/07/06/20250706152434-7abac417.png)
+![Two Factor User Setup Processing](https://sandbox.piwigo.com/uploads/4/y/1/4y1zzhnrnw//2025/07/06/20250706152434-7abac417.png)
 
 ## How It Works
 
