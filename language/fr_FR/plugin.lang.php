@@ -68,3 +68,7 @@ $lang['Unable to retrieve information for this user, please try again.'] = 'Impo
 $lang['Active'] = 'Actif';
 $lang['Inactive'] = 'Inactif';
 $lang['The 2FA has been successfully deactivated.'] = 'Le 2FA a bien été désactivé.';
+$lang['Maximum number of failed attempts before lockout'] = 'Nombre maximal de tentatives échouées avant le verrouillage';
+$lang['Lockout duration in seconds after max attempts (300 = 5 minutes)'] = 'Durée du verrouillage en secondes après le nombre maximal de tentatives (300 = 5 minutes)';
+$lang['Enable 2FA by application'] = 'Activer 2FA par application';
+$lang['Enable 2FA by email'] = 'Activer 2FA par e-mail';

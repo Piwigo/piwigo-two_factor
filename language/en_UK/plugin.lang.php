@@ -68,3 +68,7 @@ $lang['Unable to retrieve information for this user, please try again.'] = 'Unab
 $lang['Active'] = 'Active';
 $lang['Inactive'] = 'Inactive';
 $lang['The 2FA has been successfully deactivated.'] = 'The 2FA has been successfully deactivated.';
+$lang['Maximum number of failed attempts before lockout'] = 'Maximum number of failed attempts before lockout';
+$lang['Lockout duration in seconds after max attempts (300 = 5 minutes)'] = 'Lockout duration in seconds after max attempts (300 = 5 minutes)';
+$lang['Enable 2FA by application'] = 'Enable 2FA by application';
+$lang['Enable 2FA by email'] = 'Enable 2FA by email';
