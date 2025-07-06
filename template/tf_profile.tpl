@@ -26,6 +26,7 @@ window.tf_twofactor = {
 {/footer_script}
 <div class="column-flex tf-container" data-tf_id="{$k_block}" id="tf_container">
 
+  {if true === $TF_CONFIG.external_app.enabled}
   <div class="tf-setup">
     <label class="switch tf-switch">
       <input type="checkbox" id="tf_auth_app" data-collapse="tf_app_setup" data-open="false">
@@ -96,7 +97,9 @@ window.tf_twofactor = {
       <i class="icon-cog"></i>
     </div>
   </div>
+  {/if}
 
+  {if true === $TF_CONFIG.email.enabled}
   <div class="tf-setup">
     <label class="switch tf-switch">
       <input type="checkbox" id="tf_mail" data-collapse="tf_mail_setup" data-open="false">
@@ -166,6 +169,7 @@ window.tf_twofactor = {
       <i class="icon-cog"></i>
     </div>
   </div>
+  {/if}
 
   <div class="tf-bg-modal">
     <div class="tf-modal">

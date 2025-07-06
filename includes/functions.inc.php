@@ -23,6 +23,12 @@ function tf_clean_login()
     $_SESSION[TF_SESSION_VALIDATED],
     $_SESSION[TF_SESSION_TRIES_LEFT]
   );
+  pwg_unset_session_var(TF_SESSION_MAIL_CODE);
+  pwg_unset_session_var(TF_SESSION_MAIL_SENT_AT);
+
+  pwg_unset_session_var(TF_SESSION_TMP_RECOVERY_CODES);
+  pwg_unset_session_var(TF_SESSION_MAIL_SETUP_RATE_LIMIT);
+  pwg_unset_session_var(TF_SESSION_MAIL_VERIFY_RATE_LIMIT);
 }
 
 /**
@@ -82,9 +88,9 @@ function tf_mail_rate_limit($time, $session_key)
   else
   {
     $time_diff = $time - $_SESSION[$session_key];
-    if ($time_diff <= 30)
+    if ($time_diff <= 60)
     {
-      return 30 - $time_diff;
+      return 60 - $time_diff;
     }
     $_SESSION[$session_key] = time();
   }
@@ -120,15 +126,9 @@ function tf_get_default_conf()
   return array(
     'external_app' => array(
       'enabled' => true,                      // Enable 2FA by external app
-      'totp_window' => 1,                     // TOTP tolerance window (±30 seconds)
-      'code_lifetime' => 30,                  // TOTP code lifetime in seconds (30 = 30 seconds)
     ),
     'email' => array(
       'enabled' => false,                     // Enable 2FA by email
-      'totp_window' => 1,                     // TOTP tolerance window (±30 seconds)
-      'code_lifetime' => 900,                 // Email code lifetime in seconds (900 = 15 minutes)
-      'setup_delay' => 60,                    // Delay between setup email sends in seconds
-      'verify_delay' => 30                    // Delay between verification email sends in seconds
     ),
     'general' => array(
       'max_attempts' => 3,                    // Maximum number of failed attempts before lockout

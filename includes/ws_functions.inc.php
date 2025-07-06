@@ -156,7 +156,7 @@ function tf_setup_generic($params, $method)
 
   // We can only set the 2FA if we are connected with pwg_ui
   // or not a guest
-  if (is_a_guest() or !connected_with_pwg_ui())
+  if (is_a_guest() || !connected_with_pwg_ui())
   {
     return new PwgError(401, 'Access Denied');
   }
@@ -176,7 +176,8 @@ function tf_setup_generic($params, $method)
   if (isset($params['code']))
   {
     $activated = $tf->finaliseSetup($params['code']);
-    if ($activated) {
+    if ($activated)
+    {
       $logger->info('[two_factor][user_id='.$user['id'].'][method='.$method.'][setup_step=finalized]');
       return true;
     }
@@ -208,7 +209,12 @@ function tf_setup_email($params)
     return new PwgError(401, 'Unable to activate 2FA by email');
   }
 
-  if (isset($params['email']) and $user['email'] !== $params['email'])
+  if (isset($params['email']) && $user['email'] !== $params['email'])
+  {
+    return new PwgError(401, 'Unable to activate 2FA by email');
+  }
+
+  if (!PwgTwoFactor::isActivated('email'))
   {
     return new PwgError(401, 'Unable to activate 2FA by email');
   }
@@ -230,6 +236,10 @@ function tf_setup_email($params)
  */
 function tf_setup_external_app($params)
 {
+  if (!PwgTwoFactor::isActivated('external_app'))
+  {
+    return new PwgError(401, 'Unable to activate 2FA by application');
+  }
   return tf_setup_generic($params, 'external_app');
 }
 
@@ -245,7 +255,7 @@ function tf_status($params)
     return new PwgError(401, 'Acess Denied');
   }
 
-  if (!is_webmaster() and isset($params['user_id']) and $user['id'] != $params['user_id'])
+  if (!is_webmaster() && isset($params['user_id']) && $user['id'] != $params['user_id'])
   {
     return new PwgError(401, 'Acess Denied');
   }
@@ -268,15 +278,15 @@ function tf_set_config($params)
     return new PwgError(403, 'Invalid security token');
   }
 
-  if (!connected_with_pwg_ui() or !is_webmaster())
+  if (!connected_with_pwg_ui() || !is_webmaster())
   {
     return new PwgError(401, 'Access Denied');
   }
 
   if (
     !isset($params['config']['general'])
-    or !isset($params['config']['external_app'])
-    or !isset($params['config']['email'])
+    || !isset($params['config']['external_app'])
+    || !isset($params['config']['email'])
     )
   {
     return new PwgError(403, 'Missing parameter, must have: general, external_app, email');
@@ -290,9 +300,9 @@ function tf_set_config($params)
       case 'general':
         if (
           !isset($config['max_attempts']) 
-          or !preg_match('/^[1-9]\d*$/', $config['max_attempts'])
-          or !isset($config['lockout_duration']) 
-          or !preg_match('/^\d+$/', $config['lockout_duration'])
+          || !preg_match('/^[1-9]\d*$/', $config['max_attempts'])
+          || !isset($config['lockout_duration']) 
+          || !preg_match('/^\d+$/', $config['lockout_duration'])
         ) {
           return new PwgError(403, 'Missing parameter general, must have: max_attempts, lockout_duration both as integer positive');
         }
@@ -301,40 +311,20 @@ function tf_set_config($params)
         break;
 
       case 'external_app':
-        if (
-          !isset($config['enabled'])
-          or !isset($config['totp_window'])
-          or !preg_match('/^\d+$/', $config['totp_window'])
-          or !isset($config['code_lifetime']) 
-          or !preg_match('/^\d+$/', $config['code_lifetime'])
-        ) {
-          return new PwgError(403, 'Missing parameter external_app, must have: enabled as bool, totp_window, code_lifetime both as integer positive');
+        if (!isset($config['enabled']))
+        {
+          return new PwgError(403, 'Missing parameter external_app, must have: enabled as bool');
         }
 
-        $validated_conf[$key]['totp_window'] = intval($config['totp_window']);
-        $validated_conf[$key]['code_lifetime'] = intval($config['code_lifetime']);
         $validated_conf[$key]['enabled'] = get_boolean($config['enabled']);
         break;
 
       case 'email':
-        if (
-          !isset($config['enabled'])
-          or !isset($config['totp_window'])
-          or !preg_match('/^\d+$/', $config['totp_window'])
-          or !isset($config['code_lifetime'])
-          or !preg_match('/^\d+$/', $config['code_lifetime'])
-          or !isset($config['setup_delay'])
-          or !preg_match('/^\d+$/', $config['setup_delay'])
-          or !isset($config['verify_delay'])
-          or !preg_match('/^\d+$/', $config['verify_delay'])
-        ) {
-          return new PwgError(403, 'Missing parameter email, must have: enabled as bool, totp_window, code_lifetime, verify_delay, setup_delay y\'all as integer');
+        if (!isset($config['enabled']))
+        {
+          return new PwgError(403, 'Missing parameter email, must have: enabled as bool');
         }
 
-        $validated_conf[$key]['totp_window'] = intval($config['totp_window']);
-        $validated_conf[$key]['code_lifetime'] = intval($config['code_lifetime']);
-        $validated_conf[$key]['setup_delay'] = intval($config['setup_delay']);
-        $validated_conf[$key]['verify_delay'] = intval($config['verify_delay']);
         $validated_conf[$key]['enabled'] = get_boolean($config['enabled']);
         break;
     }
@@ -364,7 +354,7 @@ function tf_send_email($params)
 {
   global $user, $conf;
 
-  if (is_a_guest() or !connected_with_pwg_ui())
+  if (is_a_guest() || !connected_with_pwg_ui())
   {
     return new PwgError(401, 'Access Denied');
   }
@@ -409,7 +399,7 @@ function tf_deactivate($params)
 {
   global $user, $logger;
 
-  if (is_a_guest() or !connected_with_pwg_ui())
+  if (is_a_guest() || !connected_with_pwg_ui())
   {
     return new PwgError(401, 'Access Denied');
   }
@@ -444,7 +434,7 @@ function tf_admin_deactivate($params)
 {
   global $user, $logger;
 
-  if (!is_webmaster() or !connected_with_pwg_ui())
+  if (!is_webmaster() || !connected_with_pwg_ui())
   {
     return new PwgError(401, 'Access Denied');
   }

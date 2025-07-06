@@ -6,20 +6,24 @@ if (!defined('PHPWG_ROOT_PATH')) die('Hacking attempt!');
  */
 function tf_add_profile_block()
 {
-  global $template, $user;
+  global $template, $user, $conf;
 
-  $block = array(
-    'name' => l10n('Two Factor Authentication'),
-    'desc' => l10n('Configure your two-factor authentication settings and secure your acount'),
-    'template' => TF_REALPATH . '/template/tf_profile.tpl',
-    'standard_show_save' => false
-  );
-  $template->append('PLUGINS_PROFILE', $block);
+  if (PwgTwoFactor::isActivated())
+  {
+      $block = array(
+      'name' => l10n('Two Factor Authentication'),
+      'desc' => l10n('Configure your two-factor authentication settings and secure your acount'),
+      'template' => TF_REALPATH . '/template/tf_profile.tpl',
+      'standard_show_save' => false
+    );
+    $template->append('PLUGINS_PROFILE', $block);
 
-  $template->assign(array(
-    'TF_STATUS_EXTERNAL_APP' => boolean_to_string(PwgTwoFactor::isEnabled($user['id'], 'external_app')),
-    'TF_STATUS_EMAIL' => boolean_to_string(PwgTwoFactor::isEnabled($user['id'], 'email'))
-  ));
+    $template->assign(array(
+      'TF_STATUS_EXTERNAL_APP' => boolean_to_string(PwgTwoFactor::isEnabled($user['id'], 'external_app')),
+      'TF_STATUS_EMAIL' => boolean_to_string(PwgTwoFactor::isEnabled($user['id'], 'email')),
+      'TF_CONFIG' => $conf['two_factor']
+    ));
+  }
 }
 
 /**
@@ -29,28 +33,38 @@ function tf_try_log_user($success, $username, $password, $remember_me)
 {
   global $user, $conf;
 
-  if ($success and PwgTwoFactor::isEnabled($user['id']))
+  if (!$success)
   {
-    // for debug
-    // echo '<pre>';
-    // print_r(($success ? 'success' : 'not success'));
-    // echo '</pre>';
+    return $success;
+  }
 
-    // the method passed in class is not important for this case
-    $lockout_duration = new PwgTwoFactor('external_app')->getLockoutDuration();
-    if ($lockout_duration)
-    {
-      tf_force_logout($lockout_duration);
-    }
+  if (!PwgTwoFactor::isActivated())
+  {
+    return $success;
+  }
 
-    // success is true so the user has entered a good combination of credentials
-    // and PwgTwoFactor::isEnabled($user['id']) is the user has already set up two-factor authentication
-    // now, redirect the user to the personalized login page with two-factor authentication.
+  // success is true so the user has entered a good combination of credentials
+  // and at least one method of two-factor authentication is activated
+  
+  // check if the user have lockout duration
+  // the method passed in the class is not important for this case
+  $lockout_duration = new PwgTwoFactor('external_app')->getLockoutDuration();
+  if ($lockout_duration)
+  {
+    tf_force_logout($lockout_duration);
+  }
+  
+  // check if these methods is activated (config) and enabled (user setup)
+  $has_external_app = PwgTwoFactor::isActivated('external_app') && PwgTwoFactor::isEnabled($user['id'], 'external_app');
+  $has_email = PwgTwoFactor::isActivated('email') && PwgTwoFactor::isEnabled($user['id'], 'email');
+  
+  if ($has_external_app || $has_email)
+  {
     $_SESSION[TF_SESSION_VALIDATED] = false;
     $_SESSION[TF_SESSION_TRIES_LEFT] = $conf['two_factor']['general']['max_attempts'];
     tf_redirect();
   }
-  
+
   return $success;
 }
 
@@ -71,11 +85,11 @@ function tf_loc_begin_identification()
   {
     $message = l10n('Too many failed attempts. Please log in again.');
     $waiting = explode('-', $_GET['tf_lockout']);
-    if (isset($waiting[1]) and 'm' === $waiting[1])
+    if (isset($waiting[1]) && 'm' === $waiting[1])
     {
       $message = l10n('Too many failed attempts. Please try again in %d minutes.', $waiting[0]);
     }
-    else if (isset($waiting[1]) and 's' === $waiting[1])
+    else if (isset($waiting[1]) && 's' === $waiting[1])
     {
       $message = l10n('Too many failed attempts. Please try again in %d seconds.', $waiting[0]);
     }
@@ -106,7 +120,7 @@ function tf_loc_begin_identification()
       return $template->block_footer_script(null, 'window.toasterOnStart.push({text: "'.l10n('The code must be in the format: 000000').'", icon: "error"})');
     }
 
-    $_SESSION[TF_SESSION_TRIES_LEFT] = $_SESSION[TF_SESSION_TRIES_LEFT] - 1;
+    $_SESSION[TF_SESSION_TRIES_LEFT]--;
     $tf = new PwgTwoFactor($method);
     $verify = $tf->verifyCode($code);
     if ($verify)
@@ -137,7 +151,7 @@ function tf_loc_begin_identification()
     $tf_external = new PwgTwoFactor('external_app');
     $verify_code = $tf_external->verifyRecoveryCodes($recovery_code);
 
-    $_SESSION[TF_SESSION_TRIES_LEFT] = $_SESSION[TF_SESSION_TRIES_LEFT] - 1;
+    $_SESSION[TF_SESSION_TRIES_LEFT]--;
 
     if ($verify_code)
     {
@@ -162,11 +176,11 @@ function tf_loc_begin_identification()
 function tf_loc_end_identification()
 {
   global $template, $user, $page;
-  if (isset($_GET['tf']) and (isset($_SESSION[TF_SESSION_VALIDATED]) and !$_SESSION[TF_SESSION_VALIDATED]))
+  if (isset($_GET['tf']) && (isset($_SESSION[TF_SESSION_VALIDATED]) && !$_SESSION[TF_SESSION_VALIDATED]))
   {
     $template->assign(array(
-      'TF_STATUS_EXTERNAL_APP' => PwgTwoFactor::isEnabled($user['id'], 'external_app'),
-      'TF_STATUS_EMAIL' => PwgTwoFactor::isEnabled($user['id'], 'email'),
+      'TF_STATUS_EXTERNAL_APP' => PwgTwoFactor::isActivated('external_app') && PwgTwoFactor::isEnabled($user['id'], 'external_app'),
+      'TF_STATUS_EMAIL' => PwgTwoFactor::isActivated('email') && PwgTwoFactor::isEnabled($user['id'], 'email'),
       'F_ACTION' => 'identification.php?tf',
       'TF_LOGOUT' => get_root_url().'?act=logout',
       'PWG_TOKEN' => get_pwg_token()

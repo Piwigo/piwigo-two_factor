@@ -84,6 +84,11 @@ function tfDeactivate(user_id) {
         if (TF_CONFIG.email.enabled) {
           $('#tf_icon_email').removeClass().addClass(iconDeactivated);
         }
+
+        $("#tf_deactivate_success").fadeIn();
+        setTimeout(() => {
+          $("#tf_deactivate_success").fadeOut();
+        }, 2000);
         return;
       }
       $("#tf_deactivate_error").text(errorStr).fadeIn();

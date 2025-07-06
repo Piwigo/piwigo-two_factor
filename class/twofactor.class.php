@@ -47,7 +47,7 @@ WHERE user_id = '.$user_id.'
   AND method = \''.$this->method.'\'
 ;';
     $result = pwg_db_fetch_assoc(pwg_query($query));
-    if ($result and isset($result['secret']))
+    if ($result && isset($result['secret']))
     {
       return $result['secret'];
     }
@@ -68,7 +68,7 @@ SELECT COUNT(*)
   FROM ' . TF_TABLE . '
 WHERE user_id = ' . pwg_db_real_escape_string($user_id) . '
 ';
-    if ($method and self::isAllowedMethod($method)) {
+    if ($method && self::isAllowedMethod($method)) {
       $query .= ' AND method = \'' . pwg_db_real_escape_string($method) . '\'';
     }
     $query .= ';';
@@ -79,6 +79,29 @@ WHERE user_id = ' . pwg_db_real_escape_string($user_id) . '
       return true;
     }
     return false;
+  }
+
+  /**
+   * Check if two factor is activated
+   *
+   * @param string $method method of authenticator (mail, external app, piwigo app)
+   * @return bool|null
+   */
+  public static function isActivated($method = null)
+  {
+    if ($method && !self::isAllowedMethod($method))
+    {
+      return null;
+    }
+
+    global $conf;
+
+    if (!$method)
+    {
+      return $conf['two_factor']['external_app']['enabled'] || $conf['two_factor']['email']['enabled'];
+    }
+
+    return $conf['two_factor'][$method]['enabled'];
   }
 
   /**
@@ -149,7 +172,7 @@ SELECT
     single_update(
       USER_INFOS_TABLE,
       array('tf_lockout_duration' => null),
-      array('user_id' => pwg_db_real_escape_string($this->user['id']))
+      array('user_id' => pwg_db_real_escape_string($user_id))
     );
 
     return true;
@@ -177,7 +200,8 @@ SELECT
         if (!$this->user['email']) return null;
         include_once(PHPWG_ROOT_PATH.'include/functions_mail.inc.php');
 
-        $message = tf_generate_mail_template($this->user['username'], PwgTOTP::generateCode($this->secret), true);  
+        $code = PwgTOTP::generateCode($this->secret);
+        $message = tf_generate_mail_template($this->user['username'], $code, true);  
 
         $send_email = pwg_mail(
           $this->user['email'],
@@ -189,7 +213,12 @@ SELECT
         );
         if (!$send_email) {
           $setup = false;
+          break;
         }
+
+        pwg_set_session_var(TF_SESSION_MAIL_CODE, $code);
+        pwg_set_session_var(TF_SESSION_MAIL_SENT_AT, time());
+
         $setup = true;
         break;
 
@@ -233,6 +262,8 @@ SELECT
       $this->saveSecret();
       pwg_unset_session_var(TF_SESSION_TMP_SECRET_PREFIX . $this->method);
       pwg_unset_session_var(TF_SESSION_TMP_RECOVERY_CODES);
+      pwg_unset_session_var(TF_SESSION_MAIL_CODE);
+      pwg_unset_session_var(TF_SESSION_MAIL_SENT_AT);
       return true;
     }
     return false;
@@ -253,7 +284,8 @@ SELECT
 
     $codes = pwg_get_session_var(TF_SESSION_TMP_RECOVERY_CODES);
     $recovery_codes_sql = "NULL";
-    if ($codes) {
+    if ($codes)
+    {
       $recovery_codes_sql = "'" . pwg_db_real_escape_string($codes) . "'";
     }
 
@@ -299,6 +331,12 @@ DELETE FROM '.TF_TABLE.'
    */
   public function verifyCode($code, $secret = null)
   {
+    if ('email' === $this->method)
+    {
+      $session_code = pwg_get_session_var(TF_SESSION_MAIL_CODE);
+      $session_sent_at = pwg_get_session_var(TF_SESSION_MAIL_SENT_AT);
+      return $code === $session_code && (time() - $session_sent_at < 600);
+    }
     return PwgTOTP::verifyCode($code, $secret ?? $this->secret);
   }
 
@@ -309,7 +347,13 @@ DELETE FROM '.TF_TABLE.'
    */
   public function generateCode()
   {
-    return PwgTOTP::generateCode($this->secret);
+    $code = PwgTOTP::generateCode($this->secret);
+    if ('email' === $this->method)
+    {
+      pwg_set_session_var(TF_SESSION_MAIL_CODE, $code);
+      pwg_set_session_var(TF_SESSION_MAIL_SENT_AT, time());
+    }
+    return $code;
   }
 
   /**
@@ -328,7 +372,7 @@ SELECT *
     ';
 
     $result = pwg_db_fetch_assoc(pwg_query($query));
-    if ($result and isset($result['recovery_codes']))
+    if ($result && isset($result['recovery_codes']))
     {
       return json_decode($result['recovery_codes']);
     }

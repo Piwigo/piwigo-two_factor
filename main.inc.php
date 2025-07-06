@@ -33,11 +33,12 @@ define('TF_PATH', PHPWG_PLUGINS_PATH . TF_ID . '/');
 define('TF_TABLE', $prefixeTable . 'two_factor');
 define('TF_REALPATH', realpath(TF_PATH));
 define('TF_ADMIN', get_root_url() . 'admin.php?page=plugin-' . TF_ID);
-define('TF_SESSION_TMP_USER_ID', 'tf_tmp_user_id');
 define('TF_SESSION_TMP_SECRET_PREFIX', 'tf_tmp_secret_');
 define('TF_SESSION_TMP_RECOVERY_CODES', 'tf_tmp_recovery_codes');
 define('TF_SESSION_TRIES_LEFT', 'tf_tries_left');
 define('TF_SESSION_VALIDATED', 'tf_tries_validated');
+define('TF_SESSION_MAIL_CODE', 'tf_mail_codes');
+define('TF_SESSION_MAIL_SENT_AT', 'tf_mail_sent_at');
 define('TF_SESSION_MAIL_SETUP_RATE_LIMIT', 'tf_mail_setup_rate_limit');
 define('TF_SESSION_MAIL_VERIFY_RATE_LIMIT', 'tf_mail_verify_rate_limit');
 
@@ -77,13 +78,13 @@ function tf_init()
   $conf['two_factor'] = safe_unserialize($conf['two_factor']);
 
   include_once(TF_REALPATH . '/class/twofactor.class.php');
-  if (!is_a_guest() and isset($_SESSION[TF_SESSION_VALIDATED]) and true !== $_SESSION[TF_SESSION_VALIDATED])
+  if (!is_a_guest() && isset($_SESSION[TF_SESSION_VALIDATED]) && true !== $_SESSION[TF_SESSION_VALIDATED])
   {
     /// authorize only one api method
     if (
       defined('IN_WS')
-      and isset($_REQUEST['method'])
-      and 'twofactor.sendEmail' === $_REQUEST['method']
+      && isset($_REQUEST['method'])
+      && 'twofactor.sendEmail' === $_REQUEST['method']
     )
     {
       return;

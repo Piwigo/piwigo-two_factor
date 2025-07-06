@@ -40,22 +40,6 @@ const PWG_TOKEN = "{$PWG_TOKEN}";
             <span class="slider round"></span>
           </label>
           <label for="external_app">{'Enable 2FA by application'|translate}</label>
-
-          <div class="tf-collapse-container" id="collapse_external_app">
-            <div class="tf-collapse">
-              <div class="tf-input-container">
-                <label
-                  for="external_app_code_lifetime">{"TOTP code lifetime in seconds (30 = 30 seconds)"|translate|escape:html}</label>
-                <input id="external_app_code_lifetime" name="external_app_code_lifetime" type="number" />
-              </div>
-
-              <div class="tf-input-container">
-                <label
-                  for="external_app_totp_window">{"TOTP tolerance window (1 = ±30 seconds)"|translate|escape:html}</label>
-                <input id="external_app_totp_window" name="external_app_totp_window" type="number" />
-              </div>
-            </div>
-          </div>
         </div>
 
         <div class="tf-method">
@@ -64,33 +48,6 @@ const PWG_TOKEN = "{$PWG_TOKEN}";
             <span class="slider round"></span>
           </label>
           <label for="tf_email">{'Enable 2FA by email'|translate}</label>
-
-          <div class="tf-collapse-container" id="collapse_email">
-            <div class="tf-collapse">
-              <div class="tf-input-container">
-                <label
-                  for="email_code_lifetime">{"TOTP code lifetime in seconds (30 = 30 seconds)"|translate|escape:html}</label>
-                <input id="email_code_lifetime" name="email_code_lifetime" type="number" />
-              </div>
-
-              <div class="tf-input-container">
-                <label for="email_totp_window">{"TOTP tolerance window (±30 seconds)"|translate|escape:html}</label>
-                <input id="email_totp_window" name="email_totp_window" type="number" />
-              </div>
-
-              <div class="tf-input-container">
-                <label
-                  for="email_setup_delay">{"Delay between setup email sends in seconds"|translate|escape:html}</label>
-                <input id="email_setup_delay" name="email_setup_delay" type="number" />
-              </div>
-
-              <div class="tf-input-container">
-                <label
-                  for="email_verify_delay">{"Delay between verification email sends in seconds"|translate|escape:html}</label>
-                <input id="email_verify_delay" name="email_verify_delay" type="number" />
-              </div>
-            </div>
-          </div>
         </div>
 
       </div>

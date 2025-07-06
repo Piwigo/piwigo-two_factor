@@ -1,6 +1,6 @@
 window.toasterOnStart = window.toasterOnStart || [];
 let loadingMail = false;
-let timeBeforeResent = 30;
+let timeBeforeResent = 60;
 let timeoutBeforeResent;
 let canSentMail = true;
 let tf_pwg_token;
@@ -140,7 +140,7 @@ function tfsendMail() {
 
       if (res) {
         tfNextStep('email');
-        timeBeforeResent = 30;
+        timeBeforeResent = 60;
         tfResentEmail();
         return;
       }

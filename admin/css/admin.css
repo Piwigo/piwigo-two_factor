@@ -70,11 +70,11 @@
 }
 
 .tf-input-container input {
-  padding: 10px;
+  padding: 5px 7px;
   border-radius: 5px;
   border: 2px solid #d3d3d3;
   background-color: white;
-  width: fit-content;
+  width: 50px;
 }
 
 .tf-config-method input[type="number"] {

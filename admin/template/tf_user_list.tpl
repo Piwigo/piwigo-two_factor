@@ -6,27 +6,30 @@ const tf_str_title = "{"two_factor_js"|translate|escape:javascript}";
   <p id="tf_no_config">{"Please enable at least one authentication method in the plugin configuration."|translate}</p>
   <p id="tf_config_error">{"Unable to retrieve information for this user, please try again."|translate}</p>
   <div class="tf-config" id="tf_config">
-    <div class="tf-method">
-      <p class="user-property-label">{"2FA by application:"|translate}</p>
-      <i class="icon-circle-empty tf-icon icon-red" id="tf_icon_external_app"></i>
-    </div>
-    <div class="tf-method">
-      <p class="user-property-label">{"2FA by email:"|translate}</p>
-      <i class="icon-circle-empty tf-icon icon-red" id="tf_icon_email"></i>
+    <div>
+      <div class="tf-method">
+        <p class="user-property-label">{"2FA by application"|translate}</p>
+        <i class="icon-circle-empty tf-icon icon-red" id="tf_icon_external_app"></i>
+      </div>
+      <div class="tf-method">
+        <p class="user-property-label">{"2FA by email"|translate}</p>
+        <i class="icon-circle-empty tf-icon icon-red" id="tf_icon_email"></i>
+      </div>
     </div>
     <div class="tf-deactivate-btn">
       <button class="user-property-button head-button-2" id="tf_btn_deactivate">
         {"Disable 2FA authentication"|translate}
       </button>
       <span class="update-user-fail icon-cancel" id="tf_deactivate_error"></span>
+      <span class="update-user-success icon-green icon-ok" id="tf_deactivate_success">{"The 2FA has been successfully deactivated."|translate}</span>
     </div>
-      {* <button class="user-property-button head-button-2">
+    {* <button class="user-property-button head-button-2">
         {"Disable 2FA authentication for next connection"|translate}
       </button> *}
     <div class="tf-infos">
-      <p><i class="icon-ok-circled tf-icon icon-green"></i>{"Activated"|translate}</p>
+      <p><i class="icon-ok-circled tf-icon icon-green"></i>{"Active"|translate}</p>
       {* <p><i class="icon-dot-circled tf-icon icon-yellow"></i>{"Deactivated for next connection"|translate}</p> *}
-      <p><i class="icon-circle-empty tf-icon icon-red"></i>{"Deactivated"|translate}</p>
+      <p><i class="icon-circle-empty tf-icon icon-red"></i>{"Inactive"|translate}</p>
       <p><i class="icon-cancel-circled tf-icon"></i>{"Disable in plugin configuration"|translate}</p>
     </div>
   </div>

@@ -1,5 +1,5 @@
 let setupExternalAppSettings = false;
-let timeBeforeResent = 30;
+let timeBeforeResent = 60;
 let timeoutBeforeResent;
 let canSentMail = true;
 $(function () {
@@ -224,7 +224,7 @@ function setupEmail(email = null, code = null) {
           $('#tf_verify_email').show();
           eventFinalSetupEmail();
           openCollapse('tf_mail', true);
-          timeBeforeResent = 30;
+          timeBeforeResent = 60;
           resentEmail();
         } else if (code) {
           if (!res.result) {

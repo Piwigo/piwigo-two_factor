@@ -57,11 +57,14 @@ $lang['Two-factor authentication by application has been successfully deactivate
 $lang['Can\'t connect? <u>Use a recovery code.</u>'] = 'Can\'t connect? <u>Use a recovery code.</u>';
 $lang['Enter one of your recovery codes'] = 'Enter one of your recovery codes';
 $lang['Invalid recovery code'] = 'Invalid recovery code';
-$lang['2FA by application:'] = '2FA by application:';
-$lang['2FA by email:'] = '2FA by email:';
+$lang['2FA by application'] = '2FA by application';
+$lang['2FA by email'] = '2FA by email';
 $lang['Disable 2FA authentication'] = 'Disable 2FA authentication';
 $lang['Disable 2FA authentication for next connection'] = 'Disable 2FA authentication for next connection';
 $lang['Please enable at least one authentication method in the plugin configuration.'] = 'Please enable at least one authentication method in the plugin configuration.';
 $lang['Deactivated for next connection'] = 'Deactivated for next connection';
 $lang['Disable in plugin configuration'] = 'Disable in plugin configuration';
 $lang['Unable to retrieve information for this user, please try again.'] = 'Unable to retrieve information for this user, please try again.';
+$lang['Active'] = 'Active';
+$lang['Inactive'] = 'Inactive';
+$lang['The 2FA has been successfully deactivated.'] = 'The 2FA has been successfully deactivated.';
