@@ -115,7 +115,7 @@ function sendConfig(config) {
         return;
       }
       tferrorsChanges.fadeIn();
-      console.log(res);
+      // console.log(res);
     },
     error: function(e) {
       unsavedChanges.hide();

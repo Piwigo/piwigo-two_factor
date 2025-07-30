@@ -17,5 +17,4 @@ function tf_add_tab_users_modal()
     $template->parse('tf_user_list');
     $template->block_footer_script(null, 'const TF_CONFIG = '.json_encode($conf['two_factor']).';');
   }
-  $template->block_footer_script(null, 'console.log('.json_encode($user).')');
 }

@@ -20,7 +20,7 @@ $(function() {
     null,
     () => {
       if (!TF_CONFIG.external_app.enabled && !TF_CONFIG.email.enabled) return;
-      console.log(current_users.filter((u) => u.id == last_user_id));
+      // console.log(current_users.filter((u) => u.id == last_user_id));
       $.ajax({
         url: `ws.php?format=json&method=twofactor.status&user_id=${last_user_id}`,
         type: 'GET',
