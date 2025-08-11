@@ -375,7 +375,7 @@ function tf_send_email($params)
     return new PwgError(401, 'Email isn\'t initialized');
   }
 
-  $generated_code = new PwgTwoFactor('email')->generateCode();
+  $generated_code = (new PwgTwoFactor('email'))->generateCode();
   include_once(PHPWG_ROOT_PATH . 'include/functions_mail.inc.php');
 
   $message = tf_generate_mail_template($user['username'], $generated_code, false);
@@ -418,7 +418,7 @@ function tf_deactivate($params)
 
   if (PwgTwoFactor::isEnabled($user_id, $params['two_factor_method']))
   {
-    new PwgTwoFactor($params['two_factor_method'])->deleteSecret(pwg_db_real_escape_string($user_id));
+    (new PwgTwoFactor($params['two_factor_method']))->deleteSecret(pwg_db_real_escape_string($user_id));
     // logger
     $logger->info('[two_factor][user_id='.$user_id.'][method='.$params['two_factor_method'].'][action=deactivated]');
     return true;
@@ -448,7 +448,7 @@ function tf_admin_deactivate($params)
 
   if (PwgTwoFactor::isEnabled($user_id, 'external_app'))
   {
-    $delete_external = new PwgTwoFactor('external_app')->deleteSecret(pwg_db_real_escape_string($user_id));
+    $delete_external = (new PwgTwoFactor('external_app'))->deleteSecret(pwg_db_real_escape_string($user_id));
     if (!$delete_external)
     {
       return new PwgError(500, 'Error external app');
@@ -459,7 +459,7 @@ function tf_admin_deactivate($params)
 
   if (PwgTwoFactor::isEnabled($user_id, 'email'))
   {
-    $delete_email = new PwgTwoFactor('email')->deleteSecret(pwg_db_real_escape_string($user_id));
+    $delete_email = (new PwgTwoFactor('email'))->deleteSecret(pwg_db_real_escape_string($user_id));
     if (!$delete_email)
     {
       return new PwgError(500, 'Error email');

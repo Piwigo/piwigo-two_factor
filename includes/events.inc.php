@@ -48,7 +48,9 @@ function tf_try_log_user($success, $username, $password, $remember_me)
   
   // check if the user have lockout duration
   // the method passed in the class is not important for this case
-  $lockout_duration = new PwgTwoFactor('external_app')->getLockoutDuration();
+
+  $tf = new PwgTwoFactor('external_app');
+  $lockout_duration = $tf->getLockoutDuration();
   if ($lockout_duration)
   {
     tf_force_logout($lockout_duration);

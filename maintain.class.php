@@ -40,6 +40,12 @@ CREATE TABLE IF NOT EXISTS `'. $this->table .'` (
 
     if (empty($conf['two_factor']))
     {
+      if(!defined('TF_PATH'))
+      {
+        define('TF_PATH' , PHPWG_PLUGINS_PATH.basename(dirname(__FILE__)).'/');
+      }
+
+      include_once(TF_PATH.'/includes/functions.inc.php');
       conf_update_param('two_factor', tf_get_default_conf(), true);
     }
   }
