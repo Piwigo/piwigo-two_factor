@@ -1,0 +1,80 @@
+<?php
+// +-----------------------------------------------------------------------+
+// | This file is part of Piwigo.                                          |
+// |                                                                       |
+// | For copyright and license information, please view the COPYING.txt    |
+// | file that was distributed with this source code.                      |
+// +-----------------------------------------------------------------------+
+$lang['Your Email'] = 'Ihre E-Mail-Adresse';
+$lang['Your verification code is: %s'] = 'Ihr Bestätigungscode lautet: %s';
+$lang['two_factor_js'] = 'Zwei-Faktor-Authentifizierung';
+$lang['We will send you the authentication code by email. This method is not the most secure.'] = 'Wir senden Ihnen den Authentifizierungscode per E-Mail zu. Diese Methode ist nicht die sicherste.';
+$lang['You are setting up two-factor authentication for your account.'] = 'Sie richten die Zwei-Faktor-Authentifizierung für Ihr Konto ein.';
+$lang['You didn’t get the Email?'] = 'Sie haben die E-Mail nicht erhalten?';
+$lang['Validate with app'] = 'Mit App validieren';
+$lang['Validate with email'] = 'Per E-Mail bestätigen';
+$lang['Verify'] = 'Überprüfen';
+$lang['Use an external authentication application to obtain authentication codes.'] = 'Verwenden Sie eine externe Authentifizierungsanwendung, um Authentifizierungscodes zu erhalten.';
+$lang['Use your email to authenticate'] = 'Verwenden Sie Ihre E-Mail-Adresse zur Authentifizierung.';
+$lang['Use your external app to authenticate'] = 'Verwenden Sie Ihre externe App zur Authentifizierung.';
+$lang['Two-factor authentication by application has been successfully activated.'] = 'Die Zwei-Faktor-Authentifizierung per App wurde erfolgreich aktiviert.';
+$lang['Two-factor authentication by application has been successfully deactivated'] = 'Die Zwei-Faktor-Authentifizierung per Anwendung wurde erfolgreich deaktiviert.';
+$lang['Two-factor authentication by email has been successfully deactivated'] = 'Die Zwei-Faktor-Authentifizierung per E-Mail wurde erfolgreich deaktiviert.';
+$lang['Unable to retrieve information for this user, please try again.'] = 'Die Informationen für diesen Benutzer konnten nicht abgerufen werden. Bitte versuchen Sie es erneut.';
+$lang['Unable to scan ? Get the <u>setup key</u>'] = 'Scanvorgang nicht möglich? Holen Sie sich den <u>Setup-Schlüssel</u>.';
+$lang['Use an authentication application or browser extension to scan it. <a>Find out more about activating 2FA.</a>'] = 'Verwenden Sie eine Authentifizierungsanwendung oder eine Browsererweiterung, um es zu scannen. <a>Erfahren Sie mehr über die Aktivierung von 2FA.</a>';
+$lang['Too many failed attempts. Please try again in %d seconds.'] = 'Zu viele fehlgeschlagene Versuche. Bitte versuchen Sie es in %d Sekunden erneut.';
+$lang['Two Factor Authentication'] = 'Zwei-Faktor-Authentifizierung (2FA)';
+$lang['Two Factor configuration'] = 'Zwei-Faktor-Konfiguration';
+$lang['Too many failed attempts. Please log in again.'] = 'Zu viele fehlgeschlagene Versuche. Bitte melden Sie sich erneut an.';
+$lang['Too many failed attempts. Please try again in %d minutes.'] = 'Zu viele fehlgeschlagene Versuche. Bitte versuchen Sie es in %d Minuten erneut.';
+$lang['The email address is missing'] = 'Die E-Mail-Adresse fehlt.';
+$lang['The recovery codes have been copied.'] = 'Die Wiederherstellungscodes wurden kopiert.';
+$lang['They will not be displayed again.'] = 'Sie werden nicht erneut angezeigt.';
+$lang['This code will expire in a few minutes for security reasons.'] = 'Dieser Code läuft aus Sicherheitsgründen in wenigen Minuten ab.';
+$lang['To activate the Two Factor Authentication plugin, you need to enable "standard pages" in the Piwigo settings.'] = 'Um das Plugin für die Zwei-Faktor-Authentifizierung zu aktivieren, müssen Sie in den Piwigo-Einstellungen „Standardseiten” aktivieren.';
+$lang['Send it again in %s seconds.'] = 'In %s Sekunden erneut senden.';
+$lang['Set up using Email'] = 'Einrichtung über E-Mail';
+$lang['Set up using an authentication app'] = 'Einrichtung mithilfe einer Authentifizierungs-App';
+$lang['The 2FA has been successfully deactivated.'] = 'Die 2FA wurde erfolgreich deaktiviert.';
+$lang['The code is invalid'] = 'Der Code ist ungültig.';
+$lang['The code must be in the format: 000000'] = 'Der Code muss das folgende Format haben: 000000';
+$lang['Recommanded'] = 'Empfohlen';
+$lang['Save your recovery codes in a safe place'] = 'Bewahren Sie Ihre Wiederherstellungscodes an einem sicheren Ort auf.';
+$lang['Scan the QR code'] = 'Scannen Sie den QR-Code';
+$lang['Select an authentication method.'] = 'Wählen Sie eine Authentifizierungsmethode aus.';
+$lang['Send again.'] = 'Erneut senden.';
+$lang['Send email'] = 'E-Mail senden';
+$lang['Please add an email first before activating two factor authentication by email.'] = 'Bitte fügen Sie zuerst eine E-Mail-Adresse hinzu, bevor Sie die Zwei-Faktor-Authentifizierung per E-Mail aktivieren.';
+$lang['Please enable at least one authentication method in the plugin configuration.'] = 'Bitte aktivieren Sie mindestens eine Authentifizierungsmethode';
+$lang['Please wait %s seconds before sending an email again.'] = 'Bitte warten Sie %s Sekunden, bevor Sie erneut eine E-Mail senden.';
+$lang['If you did not request this setup, please contact your administrator immediately.'] = 'Wenn Sie diese Einrichtung nicht angefordert haben, wenden Sie sich bitte umgehend an Ihren Administrator.';
+$lang['Inactive'] = 'Inaktiv';
+$lang['Invalid recovery code'] = 'Ungültiger Wiederherstellungscode';
+$lang['Lockout duration in seconds after max attempts (300 = 5 minutes)'] = 'Sperrdauer in Sekunden nach maximaler Anzahl von Versuchen (300 = 5 Minuten)';
+$lang['Maximum number of failed attempts before lockout'] = 'Maximale Anzahl fehlgeschlagener Versuche vor Sperrung';
+$lang['Enter one of your recovery codes'] = 'Geben Sie einen Ihrer Wiederherstellungscodes ein.';
+$lang['Enter the code'] = 'Geben Sie den Code ein';
+$lang['Enter the verification code generated by your authenticator app'] = 'Geben Sie den von Ihrer Authentifizierungs-App generierten Bestätigungscode ein.';
+$lang['Enter the verification code sent to your email address'] = 'Geben Sie den Bestätigungscode ein, der an Ihre E-Mail-Adresse gesendet wurde.';
+$lang['Error when sending email'] = 'Fehler beim Senden der E-Mail';
+$lang['If you are unable to connect, please contact the webmaster'] = 'Wenn Sie keine Verbindung herstellen können, wenden Sie sich bitte an den Webmaster.';
+$lang['Do you really want to disable two factor authentication by email?'] = 'Möchten Sie die Zwei-Faktor-Authentifizierung per E-Mail wirklich deaktivieren?';
+$lang['Email two-factor authentication has been successfully enabled'] = 'Die Zwei-Faktor-Authentifizierung für E-Mails wurde erfolgreich aktiviert.';
+$lang['Emails don\'t match'] = 'E-Mails stimmen nicht überein';
+$lang['Enable 2FA by application'] = '2FA per Anwendung aktivieren';
+$lang['Enable 2FA by email'] = '2FA per E-Mail aktivieren';
+$lang['Configure your two-factor authentication settings and secure your acount'] = 'Konfigurieren Sie Ihre Zwei-Faktor-Authentifizierungseinstellungen und sichern Sie Ihr Konto.';
+$lang['Confirm your email'] = 'Bestätigen Sie Ihre E-Mail-Adresse';
+$lang['Deactivated for next connection'] = 'Für die nächste Verbindung deaktiviert';
+$lang['Disable 2FA authentication'] = '2FA-Authentifizierung deaktivieren';
+$lang['Disable 2FA authentication for next connection'] = '2FA-Authentifizierung für die nächste Verbindung deaktivieren';
+$lang['Disable in plugin configuration'] = 'In der Plugin-Konfiguration deaktivieren';
+$lang['Do you really want to disable two factor authentication by application?'] = 'Möchten Sie die Zwei-Faktor-Authentifizierung wirklich per Anwendung deaktivieren?';
+$lang['2FA by application'] = '2FA per Anwendung';
+$lang['2FA by email'] = '2FA per E-Mail';
+$lang['Active'] = 'Aktiv';
+$lang['Authentication app'] = 'Authentifizierungs-App';
+$lang['Can\'t connect? <u>Use a recovery code.</u>'] = 'Keine Verbindung möglich? <u>Verwenden Sie einen Wiederherstellungscode.</u>';
+$lang['Choose another authentication method'] = 'Wählen Sie eine andere Authentifizierungsmethode';
+$lang['Auth app'] = 'Authentifizierungsanwendungen und Browser-Erweiterungen wie 1Password, Authy, Microsoft Authenticator usw. generieren Einmalpasswörter, die als zweiter Faktor zur Überprüfung Ihrer Identität verwendet werden, wenn Sie während der Anmeldung dazu aufgefordert werden.';
