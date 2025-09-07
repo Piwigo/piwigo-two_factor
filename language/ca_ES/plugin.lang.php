@@ -1,0 +1,80 @@
+<?php
+// +-----------------------------------------------------------------------+
+// | This file is part of Piwigo.                                          |
+// |                                                                       |
+// | For copyright and license information, please view the COPYING.txt    |
+// | file that was distributed with this source code.                      |
+// +-----------------------------------------------------------------------+
+$lang['Unable to scan ? Get the <u>setup key</u>'] = 'No el podeu escanejar? Obteniu la <u>clau de configuració</u>';
+$lang['Use an authentication application or browser extension to scan it. <a>Find out more about activating 2FA.</a>'] = 'Utilitzeu una aplicació d\'autenticació o una extensió del navegador per escanejar-lo. <a>Més informació sobre com activar 2FA</a>.';
+$lang['Two Factor configuration'] = 'Configuració dels dos factors';
+$lang['Two-factor authentication by application has been successfully activated.'] = 'L\'autenticació de dos factors per aplicació s\'ha activat correctament.';
+$lang['Two-factor authentication by application has been successfully deactivated'] = 'L\'autenticació de dos factors per aplicació s\'ha desactivat correctament.';
+$lang['Two-factor authentication by email has been successfully deactivated'] = 'L\'autenticació de dos factors per correu electrònic s\'ha desactivat correctament.';
+$lang['Unable to retrieve information for this user, please try again.'] = 'No es pot recuperar la informació d\'aquest usuari. Si us plau, torneu-ho a intentar.';
+$lang['Use an external authentication application to obtain authentication codes.'] = 'Feu servir una aplicació d\'autenticació externa per obtenir codis d\'autenticació.';
+$lang['Use your email to authenticate'] = 'Utilitzeu el vostre correu electrònic per autenticar-vos';
+$lang['Use your external app to authenticate'] = 'Utilitzeu una aplicació externa per autenticar-vos';
+$lang['Validate with app'] = 'Valida amb l\'aplicació';
+$lang['Validate with email'] = 'Valida amb el correu electrònic';
+$lang['Verify'] = 'Verifica';
+$lang['We will send you the authentication code by email. This method is not the most secure.'] = 'Us enviarem el codi d\'autenticació per correu electrònic. Aquest mètode no és el més segur.';
+$lang['You are setting up two-factor authentication for your account.'] = 'Esteu configurant l\'autenticació de dos factors per al vostre compte.';
+$lang['You didn’t get the Email?'] = 'No heu rebut el correu electrònic?';
+$lang['Your Email'] = 'El vostre correu electrònic';
+$lang['Your verification code is: %s'] = 'El vostre codi de verificació és: %s';
+$lang['two_factor_js'] = 'Autenticació de dos factors';
+$lang['Too many failed attempts. Please log in again.'] = 'Massa intents fallits. Si us plau, torneu a iniciar la sessió.';
+$lang['Too many failed attempts. Please try again in %d minutes.'] = 'Massa intents fallits. Torneu a provar-ho en %d minuts.';
+$lang['Too many failed attempts. Please try again in %d seconds.'] = 'Massa intents fallits. Torneu a provar-ho en %d segons.';
+$lang['Two Factor Authentication'] = 'Autenticació de dos factors (2FA)';
+$lang['2FA by application'] = '2FA per aplicació';
+$lang['2FA by email'] = '2FA per correu electrònic';
+$lang['Active'] = 'Actiu';
+$lang['Auth app'] = 'Les aplicacions d\'autenticació i les extensions del navegador com ara 1Password, Authy, Microsoft Authenticator, etc. generen contrasenyes d\'un sol ús que s\'utilitzen com a segon factor per verificar la vostra identitat quan se us demana durant l\'inici de sessió.';
+$lang['Authentication app'] = 'Aplicació d\'autenticació';
+$lang['Can\'t connect? <u>Use a recovery code.</u>'] = 'No us podeu connectar? <u>Utilitzeu un codi de recuperació.</u>';
+$lang['Choose another authentication method'] = 'Trieu un altre mètode d\'autenticació';
+$lang['Configure your two-factor authentication settings and secure your acount'] = 'Configureu els paràmetres d\'autenticació de dos factors i protegiu el vostre compte';
+$lang['Confirm your email'] = 'Confirmeu el vostre correu electrònic';
+$lang['Deactivated for next connection'] = 'Desactivat per a la propera connexió';
+$lang['Disable 2FA authentication'] = 'Inhabilita l\'autenticació 2FA';
+$lang['Disable 2FA authentication for next connection'] = 'Inhabilita l\'autenticació 2FA per a la propera connexió';
+$lang['Disable in plugin configuration'] = 'Inhabilita a la configuració del complement';
+$lang['Do you really want to disable two factor authentication by application?'] = 'Realment voleu desactivar l\'autenticació de dos factors per aplicació?';
+$lang['Do you really want to disable two factor authentication by email?'] = 'Realment voleu desactivar l\'autenticació de dos factors per correu electrònic?';
+$lang['Email two-factor authentication has been successfully enabled'] = 'L\'autenticació de dos factors del correu electrònic s\'ha activat correctament';
+$lang['Emails don\'t match'] = 'Les adreces de correu electrònic no coincideixen';
+$lang['Enable 2FA by application'] = 'Habilita l\'autenticació 2FA per aplicació';
+$lang['Enable 2FA by email'] = 'Habilita l\'autenticació 2FA per correu electrònic';
+$lang['Enter one of your recovery codes'] = 'Introduïu un dels vostres codis de recuperació';
+$lang['Enter the code'] = 'Introduïu el codi';
+$lang['Enter the verification code generated by your authenticator app'] = 'Introduïu el codi de verificació generat per l\'aplicació d\'autenticació';
+$lang['Enter the verification code sent to your email address'] = 'Introduïu el codi de verificació que us hem enviat a la vostra adreça de correu electrònic';
+$lang['Error when sending email'] = 'Error en enviar el correu electrònic';
+$lang['If you are unable to connect, please contact the webmaster'] = 'Si no us podeu connectar, poseu-vos en contacte amb l\'administrador';
+$lang['If you did not request this setup, please contact your administrator immediately.'] = 'Si no heu sol·licitat aquesta configuració, poseu-vos en contacte amb l\'administrador immediatament.';
+$lang['Inactive'] = 'Inactiu';
+$lang['Invalid recovery code'] = 'Codi de recuperació no vàlid';
+$lang['Lockout duration in seconds after max attempts (300 = 5 minutes)'] = 'Durada del bloqueig en segons després d\'un màxim d\'intents (300 = 5 minuts)';
+$lang['Maximum number of failed attempts before lockout'] = 'Nombre màxim d\'intents fallits abans del bloqueig';
+$lang['Please add an email first before activating two factor authentication by email.'] = 'Si us plau, afegiu un correu electrònic abans d\'activar l\'autenticació de dos factors per correu electrònic.';
+$lang['Please enable at least one authentication method in the plugin configuration.'] = 'Si us plau, activeu com a mínim un mètode d\'autenticació a la configuració del connector.';
+$lang['Please wait %s seconds before sending an email again.'] = 'Si us plau, espereu %s segons abans d\'enviar un correu electrònic de nou.';
+$lang['Recommanded'] = 'Recomanat';
+$lang['Save your recovery codes in a safe place'] = 'Deseu els codis de recuperació en un lloc segur';
+$lang['Scan the QR code'] = 'Escanegeu el codi QR';
+$lang['Select an authentication method.'] = 'Seleccioneu un mètode d\'autenticació.';
+$lang['Send again.'] = 'Torna a enviar.';
+$lang['Send email'] = 'Envia correu electrònic';
+$lang['Send it again in %s seconds.'] = 'Torna\'l a enviar en %s segons.';
+$lang['Set up using Email'] = 'Configuració mitjançant el correu electrònic';
+$lang['Set up using an authentication app'] = 'Configuració amb una aplicació d\'autenticació';
+$lang['The 2FA has been successfully deactivated.'] = 'El 2FA s\'ha desactivat correctament.';
+$lang['The code is invalid'] = 'El codi no és vàlid';
+$lang['The code must be in the format: 000000'] = 'El codi ha de tenir el format: 000000';
+$lang['The email address is missing'] = 'Falta l\'adreça electrònica';
+$lang['The recovery codes have been copied.'] = 'Els codis de recuperació s\'han copiat.';
+$lang['They will not be displayed again.'] = 'No es tornaran a mostrar.';
+$lang['This code will expire in a few minutes for security reasons.'] = 'Aquest codi caducarà en uns minuts per motius de seguretat.';
+$lang['To activate the Two Factor Authentication plugin, you need to enable "standard pages" in the Piwigo settings.'] = 'Per activar el connector d\'autenticació de dos factors, cal habilitar les "pàgines estàndard" a la configuració de Piwigo.';
