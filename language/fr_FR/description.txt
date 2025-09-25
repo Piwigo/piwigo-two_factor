@@ -1,0 +1,1 @@
+Méthode d'authentification à deux facteurs.
