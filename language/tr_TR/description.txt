@@ -1,0 +1,1 @@
+İki Faktörlü Kimlik Doğrulama (2FKD) yöntemi.

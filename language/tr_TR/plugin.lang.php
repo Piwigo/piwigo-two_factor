@@ -1,0 +1,80 @@
+<?php
+// +-----------------------------------------------------------------------+
+// | This file is part of Piwigo.                                          |
+// |                                                                       |
+// | For copyright and license information, please view the COPYING.txt    |
+// | file that was distributed with this source code.                      |
+// +-----------------------------------------------------------------------+
+$lang['Your verification code is: %s'] = 'Doğrulama kodunuz: %s';
+$lang['You didn’t get the Email?'] = 'E-postayı almadınız mı?';
+$lang['two_factor_js'] = 'İki Faktörlü Kimlik Doğrulama';
+$lang['Your Email'] = 'E-postanız';
+$lang['You are setting up two-factor authentication for your account.'] = 'Hesabınız için iki faktörlü kimlik doğrulamayı ayarlıyorsunuz.';
+$lang['We will send you the authentication code by email. This method is not the most secure.'] = 'Doğrulama kodunu size e-posta ile göndereceğiz. Bu yöntem en güvenli yöntem değildir.';
+$lang['Verify'] = 'Doğrula';
+$lang['Validate with email'] = 'E-posta ile doğrula';
+$lang['Validate with app'] = 'Uygulama ile doğrulayın';
+$lang['Use your external app to authenticate'] = 'Kimlik doğrulaması için harici uygulamanızı kullanın';
+$lang['Use your email to authenticate'] = 'Kimlik doğrulaması için e-postanızı kullanın';
+$lang['Use an external authentication application to obtain authentication codes.'] = 'Kimlik doğrulama kodlarını almak için harici bir kimlik doğrulama uygulaması kullanın.';
+$lang['Use an authentication application or browser extension to scan it. <a>Find out more about activating 2FA.</a>'] = 'Taramak için bir kimlik doğrulama uygulaması veya tarayıcı uzantısı kullanın. <a>2FKD\'yı etkinleştirme hakkında daha fazla bilgi edinin.</a>';
+$lang['Unable to scan ? Get the <u>setup key</u>'] = 'Tarama yapılamıyor mu? <u>Kurulum anahtarını</u> edinin';
+$lang['Unable to retrieve information for this user, please try again.'] = 'Bu kullanıcıya ait bilgiler alınamadı, lütfen tekrar deneyin.';
+$lang['Two-factor authentication by email has been successfully deactivated'] = 'E-posta yoluyla iki faktörlü kimlik doğrulama başarıyla devre dışı bırakıldı';
+$lang['Two-factor authentication by application has been successfully deactivated'] = 'Uygulama tarafından iki faktörlü kimlik doğrulama başarıyla devre dışı bırakıldı';
+$lang['Two-factor authentication by application has been successfully activated.'] = 'Uygulama üzerinden iki faktörlü kimlik doğrulama başarıyla etkinleştirildi.';
+$lang['Two Factor configuration'] = 'İki Faktörlü yapılandırma';
+$lang['Two Factor Authentication'] = 'İki Faktörlü Kimlik Doğrulama (2FKD)';
+$lang['Too many failed attempts. Please try again in %d seconds.'] = 'Çok fazla başarısız girişim. Lütfen %d saniye içinde tekrar deneyin.';
+$lang['Too many failed attempts. Please try again in %d minutes.'] = 'Çok fazla başarısız girişim. Lütfen %d dakika sonra tekrar deneyin.';
+$lang['Too many failed attempts. Please log in again.'] = 'Çok fazla başarısız girişim. Lütfen tekrar giriş yapın.';
+$lang['To activate the Two Factor Authentication plugin, you need to enable "standard pages" in the Piwigo settings.'] = 'İki Faktörlü Kimlik Doğrulama eklentisini etkinleştirmek için Piwigo ayarlarında "standart sayfalar"ı etkinleştirmeniz gerekir.';
+$lang['This code will expire in a few minutes for security reasons.'] = 'Güvenlik nedeniyle bu kod birkaç dakika içinde geçerliliğini yitirecektir.';
+$lang['They will not be displayed again.'] = 'Tekrar görüntülenmeyecekler.';
+$lang['The recovery codes have been copied.'] = 'Kurtarma kodları kopyalandı.';
+$lang['The email address is missing'] = 'E-posta adresi eksik';
+$lang['The code must be in the format: 000000'] = 'Kod şu formatta olmalıdır: 000000';
+$lang['The code is invalid'] = 'Kod geçersiz';
+$lang['The 2FA has been successfully deactivated.'] = '2FKD başarıyla devre dışı bırakıldı.';
+$lang['Set up using an authentication app'] = 'Bir kimlik doğrulama uygulaması kullanarak kurulum yapın';
+$lang['Set up using Email'] = 'E-posta kullanarak kurulum';
+$lang['Send it again in %s seconds.'] = '%s saniye içinde tekrar gönder.';
+$lang['Send email'] = 'E-posta gönder';
+$lang['Send again.'] = 'Tekrar gönder.';
+$lang['Select an authentication method.'] = 'Bir kimlik doğrulama yöntemi seçin.';
+$lang['Scan the QR code'] = 'QR kodunu tarayın';
+$lang['Save your recovery codes in a safe place'] = 'Kurtarma kodlarınızı güvenli bir yerde saklayın';
+$lang['Recommanded'] = 'Tavsiye edilen';
+$lang['Please wait %s seconds before sending an email again.'] = 'Tekrar e-posta göndermeden önce lütfen %s saniye bekleyin.';
+$lang['Please enable at least one authentication method in the plugin configuration.'] = 'Lütfen eklenti yapılandırmasında en az bir kimlik doğrulama yöntemini etkinleştirin.';
+$lang['Please add an email first before activating two factor authentication by email.'] = 'Lütfen e-posta yoluyla iki faktörlü kimlik doğrulamayı etkinleştirmeden önce bir e-posta adresi ekleyin.';
+$lang['Maximum number of failed attempts before lockout'] = 'Kilitlenmeden önceki maksimum başarısız girişim sayısı';
+$lang['Lockout duration in seconds after max attempts (300 = 5 minutes)'] = 'Maksimum denemeden sonra kilitlenme süresi (saniye cinsinden) (300 = 5 dakika)';
+$lang['Invalid recovery code'] = 'Geçersiz kurtarma kodu';
+$lang['Inactive'] = 'Etkin değil';
+$lang['If you did not request this setup, please contact your administrator immediately.'] = 'Bu kurulumu siz talep etmediyseniz lütfen hemen yöneticinizle iletişime geçin.';
+$lang['If you are unable to connect, please contact the webmaster'] = 'Bağlanamıyorsanız lütfen web yöneticisiyle iletişime geçin';
+$lang['Error when sending email'] = 'E-posta gönderilirken hata oluştu';
+$lang['Enter the verification code sent to your email address'] = 'E-posta adresinize gönderilen doğrulama kodunu girin';
+$lang['Enter the verification code generated by your authenticator app'] = 'Kimlik doğrulama uygulamanız tarafından oluşturulan doğrulama kodunu girin';
+$lang['Enter the code'] = 'Kodu girin';
+$lang['Enter one of your recovery codes'] = 'Kurtarma kodlarınızdan birini girin';
+$lang['Enable 2FA by email'] = 'E-posta yoluyla 2FKD\'yı etkinleştirin';
+$lang['Enable 2FA by application'] = 'Uygulama tarafından 2FKD\'yı etkinleştirin';
+$lang['Emails don\'t match'] = 'E-postalar eşleşmiyor';
+$lang['Email two-factor authentication has been successfully enabled'] = 'E-posta iki faktörlü kimlik doğrulaması başarıyla etkinleştirildi';
+$lang['Do you really want to disable two factor authentication by email?'] = 'E-posta yoluyla iki faktörlü kimlik doğrulamayı gerçekten devre dışı bırakmak istiyor musunuz?';
+$lang['Do you really want to disable two factor authentication by application?'] = 'Uygulama üzerinden iki faktörlü kimlik doğrulamayı gerçekten devre dışı bırakmak istiyor musunuz?';
+$lang['Disable in plugin configuration'] = 'Eklenti yapılandırmasında devre dışı bırak';
+$lang['Disable 2FA authentication for next connection'] = 'Sonraki bağlantı için 2FKD kimlik doğrulamasını devre dışı bırakın';
+$lang['Disable 2FA authentication'] = '2FKD kimlik doğrulamasını devre dışı bırakın';
+$lang['Deactivated for next connection'] = 'Sonraki bağlantı için devre dışı bırakıldı';
+$lang['Configure your two-factor authentication settings and secure your acount'] = 'İki faktörlü kimlik doğrulama ayarlarınızı yapılandırın ve hesabınızın güvenliğini sağlayın';
+$lang['Confirm your email'] = 'E-postanızı onaylayın';
+$lang['Choose another authentication method'] = 'Başka bir kimlik doğrulama yöntemi seçin';
+$lang['Can\'t connect? <u>Use a recovery code.</u>'] = 'Bağlanamıyor musunuz? <u>Kurtarma kodu kullanın.</u>';
+$lang['Authentication app'] = 'Kimlik doğrulama uygulaması';
+$lang['Auth app'] = '1Password, Authy, Microsoft Authenticator vb. kimlik doğrulama uygulamaları ve tarayıcı uzantıları, oturum açma sırasında istendiğinde kimliğinizi doğrulamak için ikinci faktör olarak kullanılan tek seferlik parolalar üretir.';
+$lang['2FA by email'] = 'e-posta ile 2FKD';
+$lang['2FA by application'] = 'Uygulama ile 2FKD';
+$lang['Active'] = 'Aktif';
