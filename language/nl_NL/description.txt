@@ -1,0 +1,1 @@
+Twee Factor Authenticatie methode.
