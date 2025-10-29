@@ -1,7 +1,7 @@
 <?php
 defined('PHPWG_ROOT_PATH') or die('Hacking attempt!');
 
-require_once(TF_REALPATH . '/class/totp.class.php');
+require_once(PHPWG_ROOT_PATH . '/include/totp.class.php');
 
 
 class PwgTwoFactor
