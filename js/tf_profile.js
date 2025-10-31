@@ -1,3 +1,5 @@
+const enabledMessage = $('#tf_enabled_message');
+
 let setupExternalAppSettings = false;
 let timeBeforeResent = 60;
 let timeoutBeforeResent;
@@ -40,6 +42,8 @@ $(function () {
   } else {
     $('#tf_auth_app').on('change', toggleAppSetup);
   }
+
+  updateEnabledMessage();
 });
 
 function openCollapse(selector, reset = false) {
@@ -234,6 +238,8 @@ function setupEmail(email = null, code = null) {
           }
             pwgToaster({ text: window.tf_twofactor.str_email_setup_success, icon: 'success' });
           closeCollapse('tf_mail');
+          window.tf_twofactor.enabled.email = true;
+          updateEnabledMessage();
           eventEmailAlreadySetup();
         }
         return;
@@ -303,6 +309,7 @@ function eventFinalExternalApp() {
   $('#tf_app_done').off('click').on('click', function () {
     pwgToaster({ text: window.tf_twofactor.str_external_setup_success, icon: 'success' });
     closeCollapse('tf_auth_app');
+    updateEnabledMessage();
     $('#tf_app_totp').val('');
     setupExternalAppSettings = false;
     eventExternalAlreadySetup();
@@ -350,6 +357,7 @@ function setupExternalApp(code = null) {
             return;
           }
           eventFinalExternalApp();
+          window.tf_twofactor.enabled.external_app = true;
           return;
         }
 
@@ -407,9 +415,11 @@ function sendDeactivateTf(method) {
     success: function(res) {
       if (res.stat === 'ok' && res.result) {
         if (method == 'email') {
+          window.tf_twofactor.enabled.email = false;
           $('#tf_email_setting').hide().off('click');
           $('#tf_mail').off('click').on('change', toggleEmailSetup);
         } else {
+          window.tf_twofactor.enabled.external_app = false;
           $('#tf_external_app_setting').hide().off('click');
           $('#tf_auth_app').off('click').on('change', toggleAppSetup);
         }
@@ -420,6 +430,7 @@ function sendDeactivateTf(method) {
             : window.tf_twofactor.str_deactivate_external_success, 
           icon: 'success'
         });
+        updateEnabledMessage();
         return;
       }
       pwgToaster({ text: str_handle_error, icon: 'error' });
@@ -428,4 +439,12 @@ function sendDeactivateTf(method) {
       pwgToaster({ text: e.responseJSON?.message ?? str_handle_error, icon: 'error' });
     }
   })
+}
+
+function updateEnabledMessage() {
+  if (window.tf_twofactor.enabled.email || window.tf_twofactor.enabled.external_app) {
+    enabledMessage.show();
+  } else {
+    enabledMessage.hide();
+  }
 }

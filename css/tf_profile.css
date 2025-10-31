@@ -162,6 +162,11 @@
   cursor: pointer;
 }
 
+.tf-enabled-message.infos-message {
+  display: none;
+  margin-bottom: 0;
+}
+
 .tf-bg-modal {
   display: none;
   position: fixed;

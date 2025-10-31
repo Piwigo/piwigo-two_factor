@@ -16,7 +16,7 @@ window.tf_twofactor = {
   str_deactivate_email: "{"Do you really want to disable two factor authentication by email?"|translate|escape:javascript}",
   str_deactivate_external: "{"Do you really want to disable two factor authentication by application?"|translate|escape:javascript}",
   str_deactivate_email_success: "{"Two-factor authentication by email has been successfully deactivated"|translate|escape:javascript}",
-  str_deactivate_external_success: "{"Two-factor authentication by application has been successfully deactivated'"|translate|escape:javascript}",
+  str_deactivate_external_success: "{"Two-factor authentication by application has been successfully deactivated"|translate|escape:javascript}",
 
   enabled: {
     external_app: {$TF_STATUS_EXTERNAL_APP},
@@ -25,11 +25,6 @@ window.tf_twofactor = {
 };
 {/footer_script}
 <div class="column-flex tf-container" data-tf_id="{$k_block}" id="tf_container">
-  <span class="infos-message">
-    {"<b>Enabling Two-Factor Authentication</b> means that you’ll <b>need an API key to connect from external applications</b>, including the Piwigo iOS and Android apps, the Lightroom Plugin, Piwigo Remote Sync, etc."|translate}<br>
-    {"You will find more information in our documentation."|translate}
-  </span>
-
   {if true === $TF_CONFIG.external_app.enabled}
   <div class="tf-setup">
     <label class="switch tf-switch">
@@ -83,6 +78,11 @@ window.tf_twofactor = {
         </div>
 
         <div id="tf_app_recovery_codes">
+          {* TF INFO MESSAGE *}
+          <span class="infos-message">
+            {"<b>Enabling Two-Factor Authentication</b> means that you’ll <b>need an API key to connect from external applications</b>, including the Piwigo iOS and Android apps, the Lightroom Plugin, Piwigo Remote Sync, etc."|translate}<br>
+            {"You will find more information in our documentation."|translate}
+          </span>
           <p class="tf-save-recovery">{"Save your recovery codes in a safe place"|translate|escape:html}</p>
           <p class="tf-red">{"They will not be displayed again."|translate|escape:html}
           </p>
@@ -174,6 +174,11 @@ window.tf_twofactor = {
     </div>
   </div>
   {/if}
+
+  <span class="tf-enabled-message infos-message" id="tf_enabled_message">
+    {"<b>Enabling Two-Factor Authentication</b> means that you’ll <b>need an API key to connect from external applications</b>, including the Piwigo iOS and Android apps, the Lightroom Plugin, Piwigo Remote Sync, etc."|translate}<br>
+    {"You will find more information in our documentation."|translate}
+  </span>
 
   <div class="tf-bg-modal">
     <div class="tf-modal">
