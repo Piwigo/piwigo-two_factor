@@ -64,6 +64,28 @@ function tf_try_log_user($success, $username, $password, $remember_me)
   {
     $_SESSION[TF_SESSION_VALIDATED] = false;
     $_SESSION[TF_SESSION_TRIES_LEFT] = $conf['two_factor']['general']['max_attempts'];
+
+    // In WS (using api) we force to use
+    // an api key because 2FA is enabled for this user
+    if (defined('IN_WS'))
+    {
+      tf_clean_login();
+      logout_user();
+      $response = array(
+        'stat' => 'fail',
+        'err' => 40101,
+        'message' => '2FA is enaled. Please use an API Key'
+      );
+      
+      // override api response
+      http_response_code(401);
+      header('Content-Type: application/json; charset=utf-8');
+      echo json_encode($response);
+      exit;
+      return false;
+    }
+
+    // redirect to 2FA login
     tf_redirect();
   }
 

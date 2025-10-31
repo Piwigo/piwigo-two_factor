@@ -25,6 +25,10 @@ window.tf_twofactor = {
 };
 {/footer_script}
 <div class="column-flex tf-container" data-tf_id="{$k_block}" id="tf_container">
+  <span class="infos-message">
+    {"<b>Enabling Two-Factor Authentication</b> means that you’ll <b>need an API key to connect from external applications</b>, including the Piwigo iOS and Android apps, the Lightroom Plugin, Piwigo Remote Sync, etc."|translate}<br>
+    {"You will find more information in our documentation."|translate}
+  </span>
 
   {if true === $TF_CONFIG.external_app.enabled}
   <div class="tf-setup">
