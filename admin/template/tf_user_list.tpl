@@ -16,12 +16,12 @@ const tf_str_title = "{"two_factor_js"|translate|escape:javascript}";
         <i class="icon-circle-empty tf-icon icon-red" id="tf_icon_email"></i>
       </div>
     </div>
-    <div class="tf-deactivate-btn">
+    <div class="tf-deactivate-btn" id="tf_btn_reset">
       <button class="user-property-button head-button-2" id="tf_btn_deactivate">
-        {"Disable 2FA authentication"|translate}
+        {"Reset 2FA setup"|translate}
       </button>
       <span class="update-user-fail icon-cancel" id="tf_deactivate_error"></span>
-      <span class="update-user-success icon-green icon-ok" id="tf_deactivate_success">{"The 2FA has been successfully deactivated."|translate}</span>
+      <span class="update-user-success icon-green icon-ok" id="tf_deactivate_success">{"The 2FA has been successfully reset."|translate}</span>
     </div>
     {* <button class="user-property-button head-button-2">
         {"Disable 2FA authentication for next connection"|translate}
@@ -61,18 +61,23 @@ const tf_str_title = "{"two_factor_js"|translate|escape:javascript}";
   margin-bottom: 0;
 }
 
-.tf-method,
-.tf-deactivate-btn {
+.tf-method {
   display: flex;
   align-items: center;
 }
 
 .tf-deactivate-btn {
   gap: 10px;
+  display: flex;
+  align-items: start;
+}
+
+#tf_btn_deactivate {
+  text-wrap: nowrap;
 }
 
 .tf-method i {
-  font-size: 32px
+  font-size: 24px
 }
 
 .tf-infos {

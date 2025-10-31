@@ -73,3 +73,7 @@ $lang['Lockout duration in seconds after max attempts (300 = 5 minutes)'] = 'Loc
 $lang['Enable 2FA by application'] = 'Enable 2FA by application';
 $lang['Enable 2FA by email'] = 'Enable 2FA by email';
 $lang['To activate the Two Factor Authentication plugin, you need to enable "standard pages" in the Piwigo settings.'] = 'To activate the Two Factor Authentication plugin, you need to enable "standard pages" in the Piwigo settings.';
+$lang['Reset 2FA setup'] = 'Reset 2FA setup';
+$lang['The 2FA has been successfully reset.'] = 'The 2FA has been successfully reset.';
+$lang['<b>Enabling Two-Factor Authentication</b> means that you’ll <b>need an API key to connect from external applications</b>, including the Piwigo iOS and Android apps, the Lightroom Plugin, Piwigo Remote Sync, etc.'] = '<b>Enabling Two-Factor Authentication</b> means that you’ll <b>need an API key to connect from external applications</b>, including the Piwigo iOS and Android apps, the Lightroom Plugin, Piwigo Remote Sync, etc.';
+$lang['You will find more information in our documentation.'] = 'You will find more information in our <a href="https://doc.piwigo.org/" target="_blank">documentation</a>.';

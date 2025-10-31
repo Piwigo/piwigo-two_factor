@@ -1,3 +1,5 @@
+const tfBtnReset = $('#tf_btn_reset');
+
 const iconActivated = 'icon-ok-circled tf-icon icon-green';
 const iconDeactivated = 'icon-circle-empty tf-icon icon-red';
 const iconDeactivatedNext = 'icon-dot-circled tf-icon icon-yellow';
@@ -14,11 +16,12 @@ $(function() {
   }
 
   plugin_add_tab_in_user_modal(
-    tf_str_title,
+    '2FA',
     'tf_area',
     null,
     null,
     () => {
+      tfBtnReset.hide();
       if (!TF_CONFIG.external_app.enabled && !TF_CONFIG.email.enabled) return;
       // console.log(current_users.filter((u) => u.id == last_user_id));
       $.ajax({
@@ -28,16 +31,24 @@ $(function() {
         success: function(res) {
           if (res.stat == 'ok') {
             tfHideError();
+
+            // External app
             if (res.result.external_app && TF_CONFIG.external_app.enabled) {
               $('#tf_icon_external_app').removeClass().addClass(iconActivated);
+              tfBtnReset.show();
             } else if (TF_CONFIG.external_app.enabled) {
               $('#tf_icon_external_app').removeClass().addClass(iconDeactivated);
             }
+
+            // Email
             if (res.result.email && TF_CONFIG.email.enabled) {
+              tfBtnReset.show();
               $('#tf_icon_email').removeClass().addClass(iconActivated);
             } else if (TF_CONFIG.email.enabled) {
               $('#tf_icon_email').removeClass().addClass(iconDeactivated);
             }
+
+            // reset event 
             deactivateEvents(last_user_id);
             return;
           } else {
