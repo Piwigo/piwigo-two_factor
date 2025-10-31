@@ -74,7 +74,7 @@ function tf_try_log_user($success, $username, $password, $remember_me)
       $response = array(
         'stat' => 'fail',
         'err' => 40101,
-        'message' => '2FA is enaled. Please use an API Key'
+        'message' => '2FA is enabled. Please use an API Key'
       );
       
       // override api response
