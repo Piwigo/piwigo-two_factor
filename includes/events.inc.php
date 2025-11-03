@@ -74,11 +74,11 @@ function tf_try_log_user($success, $username, $password, $remember_me)
       $response = array(
         'stat' => 'fail',
         'err' => 40101,
-        'message' => '2FA is enabled. Please use an API Key'
+        'message' => l10n('2FA is enabled. Please use an API Key')
       );
       
       // override api response
-      http_response_code(401);
+      http_response_code(200);
       header('Content-Type: application/json; charset=utf-8');
       echo json_encode($response);
       exit;
