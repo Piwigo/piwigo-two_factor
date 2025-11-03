@@ -49,27 +49,47 @@ $(function() {
 
   const inputs = $('#tf_verify_code .input-container input');
   inputs.each(function(i, input) {
+    // write code
     $(input).on('input', function(e) {
-      const val = $(input).val();
-      if (val.length > 1) {
-        const chars = val.split('');
-        $(input).val(chars[0]);
-        let j = i + 1;
-        chars.slice(1).forEach(char => {
-          if (j < inputs.length) {
-            $(inputs[j]).val(char);
-            j++;
-          }
-        });
-        if (j <= inputs.length) {
-          $(inputs[j-1]).focus();
-        }
-      } else if (val.length === 1 && i + 1 < inputs.length) {
+      let val = $(input).val();
+      val = val.replace(/[^0-9]/g, '');
+      $(input).val(val);
+
+      if (val.length === 1 && i + 1 < inputs.length) {
         $(inputs[i + 1]).focus();
       }
       updateInput();
     });
 
+    // paste code
+    $(input).on('paste', function(e) {
+      e.preventDefault();
+
+      const clipboardData = (e.originalEvent || e).clipboardData || window.clipboardData;
+      if (!clipboardData) return;
+
+      let pasted = clipboardData.getData('text');
+      pasted = pasted.replace(/[^0-9]/g, '');
+      if (!pasted) return;
+
+      const chars = pasted.split('');
+      let j = i;
+
+      chars.forEach(char => {
+        if (j < inputs.length) {
+          $(inputs[j]).val(char);
+          j++;
+        }
+      });
+
+      if (j <= inputs.length) {
+        $(inputs[j - 1]).focus();
+      }
+
+      updateInput();
+    });
+
+    // navigation
     $(input).on('keydown', function(e) {
       // go back
       if ((e.key === "Backspace" || e.key === "Delete" || e.key === "ArrowLeft") && !$(input).val() && i > 0) {
@@ -86,7 +106,7 @@ $(function() {
 
 function updateInput() {
   let value = ''
-  $('#tf_verify_code input').each((i, input) => {
+  $('#tf_verify_code .otp-input').each((i, input) => {
     value += $(input).val().length == 1 ? $(input).val() : ''
   });
   $('#full_totp').val(value);

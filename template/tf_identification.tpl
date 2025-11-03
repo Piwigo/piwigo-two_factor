@@ -72,22 +72,22 @@ let str_handle_error = "{"An error has occured"|translate|escape:javascript}";
       <p id="tf_use_method"></p>
       <div class="otp-container row-flex">
         <div class="input-container">
-          <input class="otp-input" id="otp_1" type="number" step="1" min="0" max="9" autocomplete="no" pattern="\d*">
+          <input class="otp-input" name="one_time_code" id="otp_1" type="tel" inputmode="numeric" pattern="[0-9]*" maxlength="1" autocomplete="one-time-code">
         </div>
         <div class="input-container">
-          <input class="otp-input" id="otp_2" type="number" step="1" min="0" max="9" autocomplete="no" pattern="\d*">
+          <input class="otp-input" id="otp_2" type="tel" inputmode="numeric" pattern="[0-9]*" maxlength="1">
         </div>
         <div class="input-container">
-          <input class="otp-input" id="otp_3" type="number" step="1" min="0" max="9" autocomplete="no" pattern="\d*">
+          <input class="otp-input" id="otp_3" type="tel" inputmode="numeric" pattern="[0-9]*" maxlength="1">
         </div>
         <div class="input-container">
-          <input class="otp-input" id="otp_4" type="number" step="1" min="0" max="9" autocomplete="no" pattern="\d*">
+          <input class="otp-input" id="otp_4" type="tel" inputmode="numeric" pattern="[0-9]*" maxlength="1">
         </div>
         <div class="input-container">
-          <input class="otp-input" id="otp_5" type="number" step="1" min="0" max="9" autocomplete="no" pattern="\d*">
+          <input class="otp-input" id="otp_5" type="tel" inputmode="numeric" pattern="[0-9]*" maxlength="1">
         </div>
         <div class="input-container">
-          <input class="otp-input" id="otp_6" type="number" step="1" min="0" max="9" autocomplete="no" pattern="\d*">
+          <input class="otp-input" id="otp_6" type="tel" inputmode="numeric" pattern="[0-9]*" maxlength="1">
         </div>
         <input type="hidden" id="full_totp" name="tf_verify_code" />
         <input type="hidden" id="method_totp" name="tf_method_code" />

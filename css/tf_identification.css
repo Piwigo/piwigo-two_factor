@@ -159,6 +159,7 @@
   border-radius: 10px;
   transition: border 0.2s, box-shadow 0.2s;
   outline: none;
+  width: 30px !important;
 }
 
 @media (max-width: 600px) {
