@@ -78,3 +78,7 @@ $lang['Emails don\'t match'] = 'Mailadresserne stemmer ikke overens';
 $lang['Enable 2FA by application'] = 'Aktiver 2FA med applikation';
 $lang['Enable 2FA by email'] = 'Aktiver 2FA med mail';
 $lang['Enter one of your recovery codes'] = 'Skriv en af dine genoprettelseskoder';
+$lang['<b>Enabling Two-Factor Authentication</b> means that you’ll <b>need an API key to connect from external applications</b>, including the Piwigo iOS and Android apps, the Lightroom Plugin, Piwigo Remote Sync, etc.'] = '<b>Aktivering af tofaktor-autentifikation</b> betyder at du <b>skal benytte en API-nøgle ved tilslutning fra eksterne applikationer</b>, herunder Piwigos apps til iOS og Android, Lightroom Plugin, Piwigo Remote Sync, osv.';
+$lang['Reset 2FA setup'] = 'Nulstil 2FA-opsætning';
+$lang['The 2FA has been successfully reset.'] = '2FA-opsætningen er nulstillet';
+$lang['You will find more information in our documentation.'] = 'Du kan finde flere oplysninger i vores <a href="https://doc.piwigo.org/" target="_blank">dokumentation</a>.';
