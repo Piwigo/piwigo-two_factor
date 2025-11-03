@@ -391,6 +391,7 @@ SELECT *
     $codes = $this->getRecoveryCodes();
     if (0 === count($codes))
     {
+      usleep(random_int(1000000, 1500000));
       return false;
     }
 
