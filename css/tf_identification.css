@@ -153,13 +153,17 @@
   margin-bottom: 0;
 }
 
-.otp-input {
+.otp-input,
+.recovery-input {
   text-align: center;
   font-size: 26px;
   border-radius: 10px;
   transition: border 0.2s, box-shadow 0.2s;
   outline: none;
-  width: 30px !important;
+}
+
+.otp-input{
+    width: 30px !important;
 }
 
 @media (max-width: 600px) {

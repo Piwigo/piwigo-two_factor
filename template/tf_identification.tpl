@@ -109,7 +109,7 @@ let str_handle_error = "{"An error has occured"|translate|escape:javascript}";
     <form class="tf-totp-form" id="tf_recovery_code" method="post" action="{$F_ACTION}">
       <p>{"Enter one of your recovery codes"|translate}</p>
       <div class="input-container">
-        <input class="otp-input" id="tf_recovery_input" name="tf_recovery_codes" autocomplete="no">
+        <input class="recovery-input" id="tf_recovery_input" name="tf_recovery_codes" autocomplete="no">
       </div>
       <input type="hidden" id="pwg_token_recovery" name="pwg_token" value="{$PWG_TOKEN}" />
       <div class="save">
