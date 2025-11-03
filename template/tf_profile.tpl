@@ -79,12 +79,12 @@ window.tf_twofactor = {
 
         <div id="tf_app_recovery_codes">
           {* TF INFO MESSAGE *}
-          <span class="infos-message">
-            {"<b>Enabling Two-Factor Authentication</b> means that you’ll <b>need an API key to connect from external applications</b>, including the Piwigo iOS and Android apps, the Lightroom Plugin, Piwigo Remote Sync, etc."|translate}<br>
-            {"You will find more information in our documentation."|translate}
-          </span>
-          <p class="tf-save-recovery">{"Save your recovery codes in a safe place"|translate|escape:html}</p>
-          <p class="tf-red">{"They will not be displayed again."|translate|escape:html}
+          <div class="infos-message">
+            {'TF-Help-Info'|translate}
+            <span class="tf-learn-more tf-underline">{"Learn more"|translate}</span>
+          </div>
+          <p class="tf-save-recovery">{"Save your recovery codes in a safe place"|translate}</p>
+          <p class="tf-red">{"They will not be displayed again."|translate}
           </p>
           <div class="input-container tf-recovery-codes">
             <i id="tf_copy_recovery_codes" class="icon-clone"></i>
@@ -175,18 +175,40 @@ window.tf_twofactor = {
   </div>
   {/if}
 
-  <span class="tf-enabled-message infos-message" id="tf_enabled_message">
-    {"<b>Enabling Two-Factor Authentication</b> means that you’ll <b>need an API key to connect from external applications</b>, including the Piwigo iOS and Android apps, the Lightroom Plugin, Piwigo Remote Sync, etc."|translate}<br>
-    {"You will find more information in our documentation."|translate}
-  </span>
+  <div class="tf-enabled-message infos-message" id="tf_enabled_message">
+    {'TF-Help-Info'|translate}
+    <span class="tf-learn-more tf-underline">{"Learn more"|translate}</span>
+  </div>
 
-  <div class="tf-bg-modal">
+  {* MODAL DISABLE 2FA *}
+  <div class="tf-bg-modal" id="tf_disable_2fa">
     <div class="tf-modal">
       <p class="tf-modal-title" id="tf_modal_title">
           {'Do you really want to disable two factor authentication by email?'|translate|escape:html}</p>
       <div id="tf_save_modal" class="save tf-modal-save" data-modal="email">
         <button class="btn btn-cancel" id="tf_deactivate_cancel">{'Cancel'|translate}</button>
         <button class="btn btn-main" id="tf_deactivate">{'Yes'|translate}</button>
+      </div>
+    </div>
+  </div>
+
+  {* MODAL HELP API KEY *}
+  <div class="tf-bg-modal" id="tf_help_apikey">
+    <div class="tf-modal tf-modal-help">
+      <a class="icon-cancel close-modal" id="tf_close_help"></a>
+      <p class="tf-modal-title">{'Third-party application authentication'|translate|escape:html}</p>
+      <div class="tf-modal-help-content">
+        <p>
+          {"TF-Help-Description"|translate}
+        </p>
+        <ol class="tf-modal-help-step">
+          <li>{'TF-Help-Step1'|translate}</li>
+          <li>{'TF-Help-Step2'|translate}</li>
+          <li>{'TF-Help-Step3'|translate}</li>
+          <li>{'TF-Help-Step4'|translate}</li>
+          <li>{'TF-Help-Step5'|translate}</li>
+        </ol>
+        <p>{"We have prepared a documentation page to help you, with screenshots."|translate} <a href="https://doc.piwigo.org/" target="_blank">{"See the documentation page &rarr;"|translate}</a></p>
       </div>
     </div>
   </div>

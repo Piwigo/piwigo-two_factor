@@ -83,7 +83,11 @@ function tf_init()
   // for debug
   // tf_clean_login();
   
+  /* Load en_UK translation */
+  load_language('plugin.lang', TF_PATH, array('language' => 'en_UK', 'no_fallback' => true));
+  /* Load user language translation */
   load_language('plugin.lang', TF_PATH);
+  
   $template->assign(array(
     'TF_PATH' => TF_PATH,
   ));

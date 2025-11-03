@@ -44,6 +44,15 @@ $(function () {
   }
 
   updateEnabledMessage();
+
+  // Modal Help ApiKey
+  $('.tf-learn-more').on('click', openModalHelp);
+  $('#tf_close_help').on('click', closeModalHelp);
+  $(window).on('keydown', function(e) {
+    if (e.key === 'Escape' && $('#tf_help_apikey').is(':visible')) {
+      closeModalHelp();
+    }
+  });
 });
 
 function openCollapse(selector, reset = false) {
@@ -384,7 +393,7 @@ function setupExternalApp(code = null) {
 
 function closeModal() {
   $('#tf_deactivate').off('click');
-  $('.tf-bg-modal').fadeOut();
+  $('#tf_disable_2fa').fadeOut();
 }
 
 function deactivateTf(method) {
@@ -400,7 +409,7 @@ function deactivateTf(method) {
     sendDeactivateTf(method);
   });
 
-  $('.tf-bg-modal').fadeIn();
+  $('#tf_disable_2fa').fadeIn();
 }
 
 function sendDeactivateTf(method) {
@@ -447,4 +456,12 @@ function updateEnabledMessage() {
   } else {
     enabledMessage.hide();
   }
+}
+
+function openModalHelp() {
+  $('#tf_help_apikey').fadeIn();
+}
+
+function closeModalHelp() {
+  $('#tf_help_apikey').fadeOut();
 }

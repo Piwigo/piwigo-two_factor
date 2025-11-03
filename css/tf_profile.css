@@ -202,6 +202,41 @@
   align-items: center;
 }
 
+.tf-modal-help {
+  width: 600px;
+}
+
+.tf-modal-help p:not(.tf-modal-title) {
+  font-size: 13px !important;
+}
+
+.tf-modal-help .tf-modal-title {
+  margin-bottom: 25px;
+}
+
+.tf-modal-help-content,
+.tf-modal-help-step  {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.tf-modal-help-step {
+  margin: 0;
+  gap: 15px;
+}
+
+.tf-modal-help-content p,
+.tf-modal-help-step p {
+  text-align: left !important;
+
+}
+
+.tf-modal-help-step p {
+  border-left: 4px solid #D9D9D9;
+  padding-left: 10px;
+}
+
 .tf-red {
   font-size: 12px !important;
   color: #EB3223 !important;
@@ -223,6 +258,10 @@
 
 .light .tf-modal {
   background-color:#F0F0F0;
+}
+
+.light .tf-modal-help-step {
+  color: #3C3C3C;
 }
 
 .dark .tf-recommanded {
@@ -249,6 +288,10 @@
 
 .dark .tf-modal {
   background-color:#303030;
+}
+
+.dark .tf-modal-help-step {
+  color: #D6D6D6;
 }
 
 .tf-switch {
