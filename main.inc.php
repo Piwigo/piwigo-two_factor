@@ -1,11 +1,11 @@
 <?php
 /*
 Version: auto
-Plugin Name: Two Factor
+Plugin Name: Two Factor Authentication
 Plugin URI: auto
 Author: Piwigo team
 Author URI: https://github.com/Piwigo
-Description: Two Factor Authenfication method.
+Description: Two Factor Authentication method.
 Has Settings: Webmaster
 */
 
