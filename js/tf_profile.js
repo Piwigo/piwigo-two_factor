@@ -308,7 +308,7 @@ function eventSetupExtenalApp() {
 
 function eventFinalExternalApp() {
   setupExternalAppSettings.recovery_codes.forEach((code, i) => {
-    $('#tf_app_recovery_code').append(`<span>${code}</span>`);
+    $('#tf_app_recovery_code').append(`<span>${code}&nbsp;</span>`);
   })
 
   $('#tf_app_send').hide();
