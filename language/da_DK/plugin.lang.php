@@ -91,3 +91,4 @@ $lang['TF-Help-Step4'] = 'Mobilapplikationen skal autentificere med succes, hvor
 $lang['TF-Help-Step5'] = 'Da API-nøglen har en begrænset levetid, skal du forny den jævnligt. Piwigo giver besked pr. mail, når en af dine API-nøgler udløber.';
 $lang['Third-party application authentication'] = 'Autentifikation gennem tredjepartsapplikation';
 $lang['We have prepared a documentation page to help you, with screenshots.'] = 'Vi har forberedt en dokumentationsside til din hjælp, med billedeksempler.';
+$lang['TF-Help-Description'] = 'Når 2FA er aktiveret kan tredjepartsapplikationer, som forbinder sig med din Piwigo, ikke længere blot benytte dit brugernavn og adgangskode. Indtil de indfører en autentifikationsmekanisme baseret på API-nøgler eller direkte indfører 2FA, stiller Piwigo en omgåelse af problemet til rådighed, så disse applikationer fortsat kan fungere, uden at skulle opdateres. Det er ganske smart, ikk\'?';
