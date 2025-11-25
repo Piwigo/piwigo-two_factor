@@ -208,7 +208,7 @@ window.tf_twofactor = {
           <li>{'TF-Help-Step4'|translate}</li>
           <li>{'TF-Help-Step5'|translate}</li>
         </ol>
-        <p>{"We have prepared a documentation page to help you, with screenshots."|translate} <a href="https://doc.piwigo.org/" target="_blank">{"See the documentation page &rarr;"|translate}</a></p>
+        <p>{"We have prepared a documentation page to help you, with screenshots."|translate} <a href="{$TF_DOCLINK}" target="_blank">{"See the documentation page &rarr;"|translate}</a></p>
       </div>
     </div>
   </div>

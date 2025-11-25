@@ -21,7 +21,10 @@ function tf_add_profile_block()
     $template->assign(array(
       'TF_STATUS_EXTERNAL_APP' => boolean_to_string(PwgTwoFactor::isEnabled($user['id'], 'external_app')),
       'TF_STATUS_EMAIL' => boolean_to_string(PwgTwoFactor::isEnabled($user['id'], 'email')),
-      'TF_CONFIG' => $conf['two_factor']
+      'TF_CONFIG' => $conf['two_factor'],
+      'TF_DOCLINK' => 'fr_FR' === $user['language'] 
+        ? 'https://doc-fr.piwigo.org/les-utilisateurs/se-connecter-a-piwigo/two-factor-authentication-activez-la-double-authentification-sur-piwigo'
+        : 'https://doc.piwigo.org/managing-users/log-in-to-piwigo/two-factor-authentication-enable-2fa-on-piwigo'
     ));
   }
 }
