@@ -26,7 +26,7 @@ Two Factor Authentication is a security plugin for Piwigo. This plugin adds an e
    - Click "Add" and then "Activate it now".
 
 2. **Manual Installation** (Alternative):
-   - Go to the [Piwigo Extensions](https://piwigo.org/ext/) page.
+   - Go to the [Piwigo Extensions]([https://piwigo.org/ext/](https://piwigo.org/ext/index.php?eid=1052) page.
    - Search for "Two Factor" and download the latest version.
    - Unzip the downloaded file.
    - Upload the extracted folder to your Piwigo gallery's `plugins` directory. The path should look like `your-gallery/plugins/two_factor`.
