@@ -38,7 +38,7 @@ if (!conf_get_param('use_standard_pages', false))
 // +-----------------------------------------------------------------------+
 // | Define plugin constants                                               |
 // +-----------------------------------------------------------------------+
-global $prefixeTable;
+global $prefixeTable, $conf;
 
 define('TF_ID', basename(dirname(__FILE__)));
 define('TF_PATH', PHPWG_PLUGINS_PATH . TF_ID . '/');
@@ -58,6 +58,8 @@ define('TF_SESSION_MAIL_VERIFY_RATE_LIMIT', 'tf_mail_verify_rate_limit');
 // | Init Two Factor                                                       |
 // +-----------------------------------------------------------------------+
 
+$conf['two_factor'] = safe_unserialize($conf['two_factor']);
+include_once(TF_REALPATH . '/class/twofactor.class.php');
 include_once(TF_REALPATH.'/includes/functions.inc.php');
 $tf_events = TF_REALPATH.'/includes/events.inc.php';
 $tf_fws = TF_REALPATH.'/includes/ws_functions.inc.php';
@@ -91,9 +93,7 @@ function tf_init()
   $template->assign(array(
     'TF_PATH' => TF_PATH,
   ));
-  $conf['two_factor'] = safe_unserialize($conf['two_factor']);
 
-  include_once(TF_REALPATH . '/class/twofactor.class.php');
   if (!is_a_guest() && isset($_SESSION[TF_SESSION_VALIDATED]) && true !== $_SESSION[TF_SESSION_VALIDATED])
   {
     /// authorize only one api method
