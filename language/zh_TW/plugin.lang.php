@@ -88,3 +88,7 @@ $lang['Learn more'] = '更多相關資訊';
 $lang['Reset 2FA setup'] = '重置兩步驟驗證設定';
 $lang['See the documentation page &rarr;'] = '請參閱文件中的第 &rarr; 頁';
 $lang['2FA is enabled. Please use an API Key'] = '兩步驟驗證已啟用。請使用 API 金鑰';
+$lang['The 2FA has been successfully reset.'] = '兩步驟驗證設定已成功重置。';
+$lang['Third-party application authentication'] = '第三方應用程式認證';
+$lang['We have prepared a documentation page to help you, with screenshots.'] = '我們備有附上螢幕截圖的說明頁面，以協助您順利使用。';
+$lang['TF-Help-Step5'] = '由於 API 金鑰有使用期限，您需要定期進行更新。當其中一個 API 金鑰即將到期時，Piwigo 將透過電子郵件通知您。';
