@@ -2,7 +2,9 @@
 {combine_css path="admin/themes/default/fontello/css/fontello.css" order=-11}
 {combine_css path="{$TF_PATH}css/tf_identification.css" order=-11}
 {combine_css path="admin/themes/default/fontello/css/animation.css" order=10}
+{if isset($STD_PGS_SELECTED_SKIN)}
 {combine_css id='standard_pages_css' path="themes/standard_pages/skins/{$STD_PGS_SELECTED_SKIN}.css" order=100}
+{/if}
 {combine_script id='common' load='footer' require='jquery' path='admin/themes/default/js/common.js'}
 <script>
   var selected_language = `{$language_options[$current_language]}`;
